@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecnitalia Group | Ingegneria e Bonifiche</title>
+    
+    <!-- Carico GSAP per le animazioni (motore grafico) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* --- CONFIGURAZIONE COLORI E FONT --- */
+        :root {
+            --primary-blue: #003366; /* Il blu del tuo logo */
+            --dark-bg: #0a0a0a;      /* Sfondo quasi nero */
+            --light-text: #f0f0f0;
+            --accent: #007acc;       /* Un azzurro più chiaro per i dettagli */
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            overflow-x: hidden; /* Evita la barra di scorrimento orizzontale */
+        }
+
+        /* --- NAVIGAZIONE (Il menu in alto) --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            mix-blend-mode: difference; /* Fa sì che il logo si veda sia su bianco che su nero */
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: -1px;
+            color: white;
+            text-decoration: none;
+        }
+
+        /* --- SEZIONE 1: HERO (L'impatto iniziale) --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(to bottom, #000000aa, #0a0a0a), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            margin: 0;
+            line-height: 1;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: #ccc;
+            max-width: 600px;
+        }
+
+        /* --- SEZIONE 2: SCROLLYTELLING (Effetto Apple/DJI) --- */
+        /* Questo contenitore è alto 4 volte lo schermo per darci tempo di animare */
+        .scrolly-container {
+            height: 400vh; 
+            position: relative;
+        }
+
+        /* La scatola che rimane ferma mentre scorri */
+        .sticky-wrapper {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Le immagini di sfondo che cambieranno */
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0; /* Partono invisibili */
+            transition: opacity 1s ease; /* Transizione dolce se il JS fallisce */
+        }
+        
+        /* La prima immagine è visibile di default */
+        .bg-image.active {
+            opacity: 1;
+        }
+
+        /* Il testo sopra le immagini */
+        .content-card {
+            position: relative;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.6); /* Sfondo semitrasparente */
+            backdrop-filter: blur(10px);    /* Effetto vetro sfocato stile Apple */
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            max-width: 500px;
+            transform: translateY(100px); /* Parte dal basso */
+            opacity: 0;
+        }
+
+        .content-card h2 {
+            font-size: 3rem;
+            margin: 0 0 20px 0;
+            color: #fff;
+        }
+        
+        .content-card h3 {
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        /* --- SEZIONE 3: I PROGETTI (Griglia moderna) --- */
+        .projects-section {
+            background-color: #0d0d0d;
+            padding: 100px 5%;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 60px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Griglia automatica */
+            gap: 40px;
+        }
+
+        .project-card {
+            background: #151515;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px); /* Si alza quando passi il mouse */
+        }
+
+        .project-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            filter: grayscale(100%); /* In bianco e nero */
+            transition: filter 0.3s ease;
+        }
+
+        .project-card:hover .project-img {
+            filter: grayscale(0%); /* A colori quando passi il mouse */
+        }
+
+        .project-info {
+            padding: 25px;
+        }
+
+        .project-info h4 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .project-info p {
+            color: #888;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 50px;
+            text-align: center;
+            border-top: 1px solid #333;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MENU -->
+    <nav>
+        <!-- Puoi mettere qui il tag <img> col tuo logo -->
+        <a href="#" class="logo-text">Tecnitalia<span style="color:var(--accent)">Group</span></a>
+        <div style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Menu</div>
+    </nav>
+
+    <!-- SEZIONE HERO -->
+    <div class="hero">
+        <h1>Solidità &<br>Tecnologia</h1>
+        <p>Servizi tecnici integrati, Ingegneria Ambientale e Bonifiche dal 1986.</p>
+    </div>
+
+    <!-- SEZIONE SCROLLYTELLING (La parte "Figa") -->
+    <!-- 
+       LOGICA: Questo div è la "timeline". Scorrendo qui dentro, cambiamo le slide.
+    -->
+    <div class="scrolly-container">
+        <div class="sticky-wrapper">
+            
+            <!-- IMMAGINI DI SFONDO (Sostituisci i link con le tue foto in assets/img/) -->
+            
+            <!-- Slide 1: Ingegneria -->
+            <img class="bg-image slide-1" src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop" alt="Ingegneria">
+            
+            <!-- Slide 2: Servizi / Bonifiche -->
+            <img class="bg-image slide-2" src="https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?q=80&w=2070&auto=format&fit=crop" alt="Bonifiche Ambientali">
+            
+            <!-- Slide 3: Analisi / Laboratorio -->
+            <img class="bg-image slide-3" src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=2080&auto=format&fit=crop" alt="Analisi e Sicurezza">
+
+            <!-- TESTO CHE CAMBIA -->
+            <div class="content-card">
+                <h3 id="card-subtitle">Divisione 01</h3>
+                <h2 id="card-title">Tecnitalia Ingegneria</h2>
+                <p id="card-desc">Sviluppiamo competenze nel settore ambientale, sicurezza industriale e studi di fattibilità complessi.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SEZIONE PROGETTI -->
+    <div class="projects-section">
+        <h2 class="section-title">Progetti Recenti</h2>
+        
+        <div class="project-grid">
+            <!-- Progetto 1: Cartiere Binda -->
+            <div class="project-card">
+                <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=2070&auto=format&fit=crop" class="project-img" alt="Cantiere">
+                <div class="project-info">
+                    <h4>Cartiere Binda</h4>
+                    <p>Bonifica aree dismesse e riqualificazione industriale.</p>
+                </div>
+            </div>
+
+            <!-- Progetto 2: Cascina Merlata -->
+            <div class="project-card">
+                <img src="https://images.unsplash.com/photo-1590486803833-1c5c8af4a85c?q=80&w=2070&auto=format&fit=crop" class="project-img" alt="Cantiere">
+                <div class="project-info">
+                    <h4>Cascina Merlata</h4>
+                    <p>Intervento di risanamento ambientale urbano.</p>
+                </div>
+            </div>
+
+            <!-- Progetto 3: Industrie Chimiche -->
+            <div class="project-card">
+                <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=2070&auto=format&fit=crop" class="project-img" alt="Industria">
+                <div class="project-info">
+                    <h4>Industrie Chimiche</h4>
+                    <p>Caratterizzazione suoli e messa in sicurezza.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Tecnitalia Group - Via Pastorelli 4E, 20143 Milano - P.IVA 1234567890</p>
+    </footer>
+
+    <!-- SCRIPT DI ANIMAZIONE -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Definizione dei dati per le 3 slide (Titoli e Testi)
+        const slides = [
+            {
+                subtitle: "Divisione Ingegneria",
+                title: "Progettazione & Sicurezza",
+                desc: "Tecnitalia Ingegneria ha sviluppato nel settore ambientale numerose competenze grazie ad un'intensa attività di studio."
+            },
+            {
+                subtitle: "Divisione Servizi",
+                title: "Bonifiche & Ambiente",
+                desc: "Tecnitalia Servizi si occupa di tutte le fasi operative di indagine, caratterizzazione dei suoli e soluzioni di bonifica."
+            },
+            {
+                subtitle: "Il Nostro Metodo",
+                title: "Analisi & Soluzioni",
+                desc: "Identifichiamo le soluzioni ottimali a specifici problemi ambientali e gestiamo la sicurezza industriale."
+            }
+        ];
+
+        // Creiamo la timeline collegata allo scroll
+        let tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".scrolly-container",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1, // Fluidità
+                pin: ".sticky-wrapper", // Blocca lo schermo
+            }
+        });
+
+        // ANIMAZIONE 1: Passaggio dalla Slide 1 alla 2
+        tl.to(".slide-1", { opacity: 0, duration: 2 }, "+=1") // La slide 1 svanisce
+          .to(".slide-2", { opacity: 1, duration: 2 }, "<")   // La slide 2 appare contemporaneamente
+          // Cambio testo
+          .to(".content-card", { y: -20, opacity: 0, duration: 0.5 }, "<") // Il testo vecchio va via
+          .call(() => updateText(1)) // Funzione che aggiorna le parole (JS puro)
+          .to(".content-card", { y: 0, opacity: 1, duration: 0.5 }); // Il testo nuovo appare
+
+        // ANIMAZIONE 2: Passaggio dalla Slide 2 alla 3
+        tl.to(".slide-2", { opacity: 0, duration: 2 }, "+=2")
+          .to(".slide-3", { opacity: 1, duration: 2 }, "<")
+          .to(".content-card", { y: -20, opacity: 0, duration: 0.5 }, "<")
+          .call(() => updateText(2))
+          .to(".content-card", { y: 0, opacity: 1, duration: 0.5 });
+
+        // Funzione per aggiornare il testo HTML dinamicamente
+        function updateText(index) {
+            document.getElementById("card-subtitle").innerText = slides[index].subtitle;
+            document.getElementById("card-title").innerText = slides[index].title;
+            document.getElementById("card-desc").innerText = slides[index].desc;
+        }
+    </script>
+</body>
+</html>
