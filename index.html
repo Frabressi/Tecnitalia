@@ -60,11 +60,11 @@
         .logo-img { 
             height: 45px; 
             width: auto; 
-            /* Questo filtro rende l'immagine completamente bianca */
-            filter: brightness(0) invert(1); 
             transition: transform 0.3s;
+            background: white; /* Aggiungi questo per sicurezza */
+            padding: 5px;      /* Aggiungi questo per dare aria al logo */
+            border-radius: 4px; /* Arrotonda leggermente gli angoli */
         }
-        .logo-img:hover { transform: scale(1.05); }
 
         .nav-links a {
             text-decoration: none; 
