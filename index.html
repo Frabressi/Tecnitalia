@@ -367,10 +367,10 @@
                 <p>Tel: 02 76000206<br>Email: info@tecnitaliagroup.it</p>
             </div>
             <div class="form-box">
-                <form onsubmit="event.preventDefault(); alert('Messaggio inviato (demo)!')">
-                    <input type="text" placeholder="Nome" required>
-                    <input type="email" placeholder="Email" required>
-                    <textarea rows="4" placeholder="Messaggio" required></textarea>
+                <form action="https://formspree.io/f/mreaypqq" method="POST">
+                    <input type="text" name="nome" placeholder="Nome" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <textarea name="messaggio" rows="4" placeholder="Messaggio" required></textarea>                    
                     <button type="submit" class="submit-btn">Invia Messaggio</button>
                 </form>
             </div>
