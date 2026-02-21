@@ -18,7 +18,9 @@
     <style>
         /* --- CSS BASE --- */
         :root {
-            --blue: #00427A;
+            /* NUOVO BLU CAMPIONATO DAL LOGO (più chiaro e vibrante) */
+            --blue: #005899; 
+            --blue-dark: #004170;
             --dark: #111111;
             --gray: #f5f5f7;
             --text: #1d1d1f;
@@ -42,21 +44,37 @@
         p, li { line-height: 1.6; color: var(--text-light); font-size: 1.1rem; margin-bottom: 20px; }
         ul { padding-left: 20px; margin-bottom: 20px;}
         
-        /* --- NAVIGAZIONE --- */
+        /* --- NAVIGAZIONE MODIFICATA --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
-            padding: 20px 5%; box-sizing: border-box;
+            padding: 15px 5%; box-sizing: border-box;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05);
+            z-index: 1000; 
+            /* Sfondo BLU invece che bianco trasparente per far risaltare il logo bianco */
+            background: var(--blue);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
         }
-        .logo-img { height: 40px; width: auto; }
+
+        /* TRASFORMA IL LOGO IN BIANCO CON CSS */
+        .logo-img { 
+            height: 45px; 
+            width: auto; 
+            /* Questo filtro rende l'immagine completamente bianca */
+            filter: brightness(0) invert(1); 
+            transition: transform 0.3s;
+        }
+        .logo-img:hover { transform: scale(1.05); }
+
         .nav-links a {
-            text-decoration: none; color: var(--text); font-weight: 600; margin-left: 30px;
-            font-size: 0.9rem; transition: color 0.3s; text-transform: uppercase;
+            text-decoration: none; 
+            color: rgba(255,255,255,0.9); /* Testo bianco */
+            font-weight: 600; margin-left: 30px;
+            font-size: 0.95rem; transition: color 0.3s; text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .nav-links a:hover { color: var(--blue); }
-        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; }
+        .nav-links a:hover { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: white; }
 
         /* --- HERO SECTION --- */
         .hero {
@@ -65,13 +83,14 @@
         }
         .hero-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 120%;
-            /* L'immagine viene impostata inline nell'HTML per facilità */
             background-size: cover; background-position: center;
             z-index: 1; will-change: transform;
         }
         .hero-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); z-index: 2; /* Scurisce l'immagine per leggere il testo */
+            /* Gradiente leggermente bluastro per armonizzare */
+            background: linear-gradient(to bottom, rgba(0, 88, 153, 0.3), rgba(0,0,0,0.6)); 
+            z-index: 2; 
         }
         .hero-text {
             position: relative; z-index: 3; color: white; text-align: center; max-width: 900px; padding: 20px;
@@ -126,7 +145,8 @@
         
         .hover-reveal {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 66, 122, 0.9); display: flex; align-items: center; justify-content: center;
+            background: rgba(0, 88, 153, 0.9); /* Usa il nuovo blu */
+            display: flex; align-items: center; justify-content: center;
             color: white; font-weight: 700; opacity: 0; transition: opacity 0.3s;
             text-transform: uppercase; letter-spacing: 1px;
         }
@@ -138,8 +158,8 @@
         .member img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid var(--blue);}
         .member h4 { font-size: 1.2rem; margin-bottom: 5px; color: var(--text); }
         .member span { color: var(--blue); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; }
-        .lnk-btn { display: inline-block; margin-top: 15px; font-size: 0.8rem; color: #0077b5; text-decoration: none; border: 1px solid #0077b5; padding: 5px 20px; border-radius: 20px; transition:0.3s;}
-        .lnk-btn:hover { background: #0077b5; color: white; }
+        .lnk-btn { display: inline-block; margin-top: 15px; font-size: 0.8rem; color: var(--blue); text-decoration: none; border: 1px solid var(--blue); padding: 5px 20px; border-radius: 20px; transition:0.3s;}
+        .lnk-btn:hover { background: var(--blue); color: white; }
 
         /* --- FOOTER --- */
         .footer-sec { background: #0b0c10; color: #888; padding: 80px 10%; }
@@ -148,10 +168,12 @@
             width: 100%; padding: 15px; margin-bottom: 15px; background: #1f1f1f; border: 1px solid #333;
             color: white; border-radius: 8px; font-family: inherit; box-sizing: border-box;
         }
+        .form-box input:focus, .form-box textarea:focus { border-color: var(--blue); outline: none; }
         .submit-btn {
             background: var(--blue); color: white; border: none; padding: 15px 30px;
-            font-weight: 700; border-radius: 30px; cursor: pointer; text-transform: uppercase; width: 100%;
+            font-weight: 700; border-radius: 30px; cursor: pointer; text-transform: uppercase; width: 100%; transition: background 0.3s;
         }
+        .submit-btn:hover { background: white; color: var(--blue); }
 
         /* --- MODAL --- */
         .modal {
@@ -170,7 +192,7 @@
         .close-modal {
             position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;
             background: white; border-radius: 50%; border: none; cursor: pointer; font-size: 24px;
-            z-index: 10; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center;
+            z-index: 10; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; color: var(--blue);
         }
         .m-header { height: 350px; }
         .m-header img { width: 100%; height: 100%; object-fit: cover; }
@@ -197,6 +219,7 @@
 
     <nav>
         <a href="#" class="logo-container">
+            <!-- Il logo qui verrà reso BIANCO dal CSS (filter: invert) -->
             <img src="./assets/img/logo.jpg" alt="Tecnitalia Group" class="logo-img">
         </a>
         <div class="nav-links">
@@ -210,7 +233,6 @@
     </nav>
 
     <header class="hero">
-        <!-- QUI HO INSERITO SCAVO.JPG COME RICHIESTO -->
         <div class="hero-bg" id="hero-bg" style="background-image: url('./assets/img/scavo.jpg');"></div>
         <div class="hero-overlay"></div>
         <div class="hero-text" id="hero-content">
@@ -248,7 +270,6 @@
                 <p>Supportiamo venditori o acquirenti nella valutazione delle passività ambientali e progettiamo interventi completi.</p>
             </div>
             <div class="div-img-wrapper reveal-img">
-                <!-- Immagine generica ingegneria (Unsplash) - Puoi cambiarla se hai una foto specifica -->
                 <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop" class="div-img parallax-img" alt="Ingegneria">
             </div>
         </div>
@@ -267,7 +288,6 @@
                 </ul>
             </div>
             <div class="div-img-wrapper reveal-img">
-                 <!-- Immagine generica servizi (Unsplash) -->
                 <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop" class="div-img parallax-img" alt="Servizi">
             </div>
         </div>
@@ -457,7 +477,7 @@
             });
         });
 
-        // 6. DATI PROGETTI - ORA CON I PERCORSI IMMAGINI LOCALI
+        // 6. DATI PROGETTI
         const projectsData = [
             {
                 title: "Ex Cartiere Binda",
@@ -518,15 +538,14 @@
             document.getElementById('m-desc').innerHTML = p.desc;
             
             modal.classList.add('active');
-            lenis.stop(); // Blocca scroll pagina
+            lenis.stop();
         }
 
         function closeProject() {
             modal.classList.remove('active');
-            lenis.start(); // Sblocca scroll pagina
+            lenis.start();
         }
 
-        // Chiudi cliccando fuori
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeProject();
         });
