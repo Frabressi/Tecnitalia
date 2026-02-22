@@ -26,13 +26,11 @@
         ul { padding-left: 20px; margin-bottom: 20px; }
         li { margin-bottom: 8px; }
 
-        /* --- NAVIGAZIONE --- */
+        /* --- NAVIGAZIONE (Logo a sinistra, Link a destra) --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 20px 5%; box-sizing: border-box;
-            display: flex; flex-direction: column; 
-            align-items: center; 
-            gap: 15px; 
+            display: flex; justify-content: space-between; align-items: center;
             z-index: 1000;
             background: transparent; 
             transition: all 0.4s ease;
@@ -40,7 +38,7 @@
 
         nav.scrolled {
             background: rgba(255, 255, 255, 0.98);
-            padding: 10px 5%; gap: 5px; 
+            padding: 15px 5%; 
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
 
@@ -48,10 +46,10 @@
         .logo-img { height: 70px; width: auto; display: block; transition: height 0.3s ease; }
         nav.scrolled .logo-img { height: 50px; }
 
-        .nav-links { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; }
+        .nav-links { display: flex; align-items: center; }
         .nav-links a {
             text-decoration: none; color: white; 
-            font-weight: 600; margin: 0 20px; 
+            font-weight: 600; margin-left: 30px; 
             font-size: 0.95rem; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
             transition: color 0.3s;
         }
@@ -60,9 +58,8 @@
 
         .hamburger { 
             display: none; font-size: 1.8rem; cursor: pointer; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
-            position: absolute; right: 5%; top: 35px; 
         }
-        nav.scrolled .hamburger { color: var(--text); text-shadow: none; top: 15px; }
+        nav.scrolled .hamburger { color: var(--text); text-shadow: none; }
 
         /* --- HERO --- */
         .hero {
@@ -96,7 +93,6 @@
         .section { padding: 100px 10%; }
         .bg-gray { background-color: var(--gray); }
 
-        /* Chi Siamo espanso */
         .text-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 40px; }
         .text-full { max-width: 900px; margin: 0 auto; }
 
@@ -106,7 +102,6 @@
         }
         .stat-num { font-size: 3.5rem; color: var(--blue); font-weight: 800; display: block; }
         
-        /* Division Blocks (Img + Text) */
         .division-block { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
         .division-block.reversed { direction: rtl; } 
         .division-block.reversed .div-text { direction: ltr; }
@@ -118,9 +113,20 @@
         .div-img { width: 100%; height: 100%; object-fit: cover; }
         .div-text h3 { font-size: 2.5rem; color: var(--blue); margin-bottom: 20px; }
 
+        /* --- FILTRI PROGETTI --- */
+        .filter-container {
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-top: 40px; margin-bottom: 20px;
+        }
+        .filter-btn {
+            background: transparent; border: 2px solid var(--blue); color: var(--blue);
+            padding: 8px 20px; border-radius: 25px; cursor: pointer; font-weight: 600;
+            transition: all 0.3s ease; text-transform: uppercase; font-size: 0.85rem;
+        }
+        .filter-btn:hover, .filter-btn.active { background: var(--blue); color: white; }
+
         /* --- PROGETTI (SLIDER ORIZZONTALE) --- */
         .projects-slider-container {
-            position: relative; width: 100%; display: flex; align-items: center; margin-top: 50px;
+            position: relative; width: 100%; display: flex; align-items: center; margin-top: 30px;
         }
         .projects-grid { 
             display: flex; gap: 30px; overflow-x: auto; scroll-snap-type: x mandatory; 
@@ -133,7 +139,10 @@
             background: white; border-radius: 16px; overflow: hidden; cursor: pointer;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.3s;
             min-width: 350px; flex: 0 0 auto; scroll-snap-align: start;
+            animation: fadeIn 0.5s ease-out forwards;
         }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        
         .project-card:hover { transform: translateY(-10px); }
         .p-img-box { height: 250px; position: relative; overflow: hidden; }
         .p-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
@@ -174,7 +183,6 @@
         }
         .modal.active .modal-box { transform: scale(1); }
 
-        /* Contenitore Slider Immagini nel Modal */
         .m-header {
             width: 100%; height: 350px; flex-shrink: 0; position: relative; overflow: hidden; background: #000;
         }
@@ -185,7 +193,6 @@
         }
         .m-slide.active { opacity: 1; z-index: 2; }
         
-        /* Frecce interne al modal */
         .m-img-btn {
             position: absolute; top: 50%; transform: translateY(-50%);
             background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px 15px;
@@ -248,9 +255,8 @@
             .m-header { height: 250px; } 
             .m-scroll-content { padding: 25px; }
             
-            /* Adatta lo slider ai telefoni */
             .project-card { min-width: 280px; }
-            .slider-btn { display: none; } /* Su mobile si scorre col dito */
+            .slider-btn { display: none; } 
         }
     </style>
 </head>
@@ -357,6 +363,15 @@
         <div class="fade-element" style="text-align:center;">
             <h2 style="font-size:3rem; margin-bottom:10px; color:var(--blue);">Progetti in Evidenza</h2>
             <p>I nostri principali interventi di bonifica e riqualificazione.</p>
+        </div>
+
+        <div class="filter-container fade-element">
+            <button class="filter-btn active" onclick="filterProjects('tutti', this)">Tutti i Progetti</button>
+            <button class="filter-btn" onclick="filterProjects('bonifica', this)">Bonifiche</button>
+            <button class="filter-btn" onclick="filterProjects('amianto', this)">Amianto / FAV</button>
+            <button class="filter-btn" onclick="filterProjects('acque', this)">Acque / Falde</button>
+            <button class="filter-btn" onclick="filterProjects('rifiuti', this)">Rifiuti / Discariche</button>
+            <button class="filter-btn" onclick="filterProjects('demolizione', this)">Demolizioni / Decommissioning</button>
         </div>
 
         <div class="projects-slider-container fade-element">
@@ -490,7 +505,7 @@
         });
 
         // ====================================================================
-        // GESTIONE PROGETTI: AGGIUNGI QUI I TUOI NUOVI PROGETTI!
+        // GESTIONE PROGETTI CON I TAG PER IL FILTRO
         // ====================================================================
         
         const projectsData = [
@@ -502,6 +517,7 @@
                 type: "Progetto Operativo di Bonifica e Direzione Lavori",
                 cardSubtitle: "Progetto Operativo di Bonifica e Direzione Lavori.",
                 images: ["./assets/img/merlata1.jpg", "./assets/img/merlata2.jpg"], 
+                tags: ["bonifica"],
                 desc: `
                 <p>Il sito era totalmente dismesso e presentava contaminazioni da idrocarburi e metalli. L’area verrà trasformata in un sistema di viabilità e urbanizzazioni necessarie per il collegamento tra il quartiere di Cascina Merlata e la zona EXPO2015.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -518,6 +534,7 @@
                 type: "Progetto Operativo di Bonifica e Direzione Lavori",
                 cardSubtitle: "Progetto Operativo di Bonifica e Direzione Lavori.",
                 images: ["./assets/img/blaslini1.jpg", "./assets/img/baslini2.jpg"], 
+                tags: ["bonifica", "acque", "demolizione"],
                 desc: `
                 <p>Il sito è totalmente dismesso e presenta contaminazioni da metalli, idrocarburi, solventi e pesticidi.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -536,6 +553,7 @@
                 type: "Progetto Definitivo di Bonifica e Direzione Lavori",
                 cardSubtitle: "Progetto Definitivo di Bonifica e Direzione Lavori.",
                 images: ["./assets/img/binda1.jpg", "./assets/img/binda2.jpg"], 
+                tags: ["bonifica", "amianto", "demolizione"],
                 desc: `
                 <p>Il sito era totalmente dismesso e presentava contaminazioni da PCB, metalli e idrocarburi. L’area ha cambiato destinazione ed è stata trasformata in un quartiere residenziale.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -554,6 +572,7 @@
                 type: "Progetto Definitivo di Bonifica",
                 cardSubtitle: "Progetto Definitivo di Bonifica Sito Interesse Nazionale.",
                 images: ["./assets/img/gasometri1.jpg", "./assets/img/gasometri2.jpg"], 
+                tags: ["bonifica", "acque", "rifiuti"],
                 desc: `
                 <p>L’area all’epoca della redazione del progetto era inserita tra i Siti d’Interesse Nazionale previsti dal Decreto Ministeriale 18 settembre 2001, n. 468. Il sito è totalmente dismesso e presenta contaminazioni da idrocarburi e metalli.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di redigere un progetto di bonifica dell’intera area con utilizzo di diverse tecnologie:</strong></p>
@@ -573,6 +592,7 @@
                 type: "Progetto Definitivo di Bonifica e Direzione Lavori",
                 cardSubtitle: "Progetto Definitivo di Bonifica e Direzione Lavori.",
                 images: ["./assets/img/broggi1.jpg", "./assets/img/broggi2.jpg"], 
+                tags: ["bonifica", "acque", "demolizione"],
                 desc: `
                 <p>Il sito era totalmente dismesso e presentava contaminazioni da metalli e idrocarburi. L’area è stata trasformata nella nuova sede del Politecnico di Milano.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -592,6 +612,7 @@
                 type: "Progetto Operativo di Bonifica con Analisi di Rischio",
                 cardSubtitle: "Analisi di Rischio, Capping e Soil Vapor Extraction.",
                 images: ["./assets/img/broggipoli1.jpg", "./assets/img/broggipoli2.jpg", "./assets/img/broggipoli3.jpg"], 
+                tags: ["bonifica", "acque"],
                 desc: `
                 <p>Il sito, già sede del Politecnico di Milano, è risultato contaminato in profondità da idrocarburi, IPA e solventi clorurati.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -613,6 +634,7 @@
                 type: "Piano di caratterizzazione ed indagine ambientale",
                 cardSubtitle: "Piano di caratterizzazione ed indagine ambientale.",
                 images: ["./assets/img/basmetto1.jpg", "./assets/img/basmetto2.jpg"], 
+                tags: ["bonifica"],
                 desc: `
                 <p>Il sito è stato impiegato originariamente in usi agricoli e successivamente come area di deposito di automezzi da demolire. L’area deve cambiare destinazione d’uso e necessita di una bonifica dei suoli propedeutica alla integrale demolizione della vecchia cascina ed alla nuova urbanizzazione.</p>
                 <p>Tecnitalia Ingegneria è stata individuata come partner nel pool di progettazione sia per determinare i costi della futura bonifica sia per svolgere l’attività di caratterizzazione iniziale del sito.</p>`
@@ -625,6 +647,7 @@
                 type: "Progetto di bonifica con Analisi di Rischio",
                 cardSubtitle: "Progetto di bonifica con Analisi di Rischio.",
                 images: ["./assets/img/ceramica1.jpg", "./assets/img/ceramica2.jpg"], 
+                tags: ["bonifica"],
                 desc: `
                 <p>L’area è totalmente dismessa e presenta contaminazioni da idrocarburi e metalli, sia all’interno dell’ex stabilimento sia all’esterno.</p>
                 <p>Tecnitalia Ingegneria ha ricevuto l’incarico di redigere un progetto di bonifica dell’intera area con Analisi di rischio e di Direzione Lavori della prima fase (Area esterna) di bonifica.</p>`
@@ -637,6 +660,7 @@
                 type: "Caratterizzazione e Bonifica Amianto",
                 cardSubtitle: "Caratterizzazione ambientale e Bonifica MCA e FAV.",
                 images: ["./assets/img/pirelli1.jpg", "./assets/img/pirelli2.jpg"], 
+                tags: ["amianto", "bonifica"],
                 desc: `
                 <p>L’area deve cambiare destinazione d’uso e sarà totalmente demolita. È stata avviata dalla ex proprietà un’attività di caratterizzazione che è stata ripresa da Tecnitalia Ingegneria per giungere ad una progettazione con analisi di rischio degli interventi di bonifica.</p>
                 <p>Poiché l’area presentava un’ingente quantità di MCA, sia in forma friabile sia compatta, è stato necessario dapprima redigere una mappatura ed in seguito procedere alla bonifica anche delle fibre artificiali vetrose (FAV).</p>`
@@ -649,6 +673,7 @@
                 type: "Bonifica materiali contenenti amianto",
                 cardSubtitle: "Bonifica materiali contenenti amianto (MCA) e FAV.",
                 images: ["./assets/img/smeraldo1.jpg", "./assets/img/smeraldo2.jpg"], 
+                tags: ["amianto"],
                 desc: `
                 <p>L’area ha cambiato destinazione ed è stata totalmente ristrutturata per essere adibita a negozio/ristorante. Presentava occultamente un’ingente quantità di MCA soprattutto in forma friabile. È stato necessario intervenire con diverse aree confinate.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -665,6 +690,7 @@
                 type: "Progetto Operativo di Bonifica e Direzione Lavori",
                 cardSubtitle: "Progetto Operativo di Bonifica e Direzione Lavori.",
                 images: ["./assets/img/exide1.jpg", "./assets/img/exide2.jpg"], 
+                tags: ["bonifica", "acque"],
                 desc: `
                 <p>Il sito è totalmente dismesso e presenta contaminazioni da metalli, idrocarburi e pesticidi.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -683,6 +709,7 @@
                 type: "Progetto Operativo di Bonifica e Direzione Lavori",
                 cardSubtitle: "Progetto Operativo di Bonifica e Direzione Lavori.",
                 images: ["./assets/img/bonelli1.jpg", "./assets/img/bonelli2.jpg"], 
+                tags: ["bonifica", "acque"],
                 desc: `
                 <p>Il sito industriale è in attività e presenta contaminazioni da metalli, idrocarburi e fluoruri.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -702,6 +729,7 @@
                 type: "Progetto Definitivo di Bonifica e Direzione Lavori",
                 cardSubtitle: "Progetto Definitivo di Bonifica e Direzione Lavori.",
                 images: ["./assets/img/nivea1.jpg", "./assets/img/nivea2.jpg"], 
+                tags: ["bonifica", "amianto", "acque", "demolizione"],
                 desc: `
                 <p>L’area deve cambiare destinazione d’uso ed è stata totalmente demolita. È stata avviata dalla ex proprietà un’attività di caratterizzazione che è stata ripresa da Tecnitalia Ingegneria per giungere alla progettazione definitiva.</p>
                 <p>Poiché l’area presentava un’ingente quantità di MCA, sia in forma friabile sia compatta, è stato necessario dapprima redigere una mappatura ed in seguito procedere alla bonifica.</p>
@@ -720,6 +748,7 @@
                 type: "Progetto Definitivo di Bonifica con MISE",
                 cardSubtitle: "MISE, Sbarramento Idraulico e Impianto TAF.",
                 images: ["./assets/img/origoni1.jpg", "./assets/img/origoni2.jpg"], 
+                tags: ["bonifica", "acque"],
                 desc: `
                 <p>Il sito era totalmente dismesso e presentava contaminazioni da metalli e idrocarburi. L’area è stata trasformata nella nuova sede del Politecnico di Milano.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -738,6 +767,7 @@
                 type: "Discarica di servizio e Direzione Lavori",
                 cardSubtitle: "Progettazione discarica di servizio e Direzione Lavori.",
                 images: ["./assets/img/finalube1.jpg", "./assets/img/finalube2.jpg"], 
+                tags: ["bonifica", "acque", "rifiuti"],
                 desc: `
                 <p>Il sito era totalmente dismesso e presentava contaminazioni da idrocarburi, IPA, BTEX e metalli. L’area è stata trasformata in un quartiere residenziale con la creazione di un vastissimo parco pubblico.</p>
                 <p><strong>Gli interventi di bonifica si sono svolti sotto il controllo di Tecnitalia Ingegneria:</strong></p>
@@ -756,6 +786,7 @@
                 type: "Progetto Operativo di Bonifica e Direzione Lavori",
                 cardSubtitle: "Progetto Operativo di Bonifica e Direzione Lavori.",
                 images: ["./assets/img/prada1.jpg", "./assets/img/prada2.jpg"], 
+                tags: ["bonifica"],
                 desc: `
                 <p>Le attività produttive sul sito erano completamente dismesse e l’area veniva utilizzata come deposito di opere d’arte e showroom. L’area presentava contaminazioni da metalli e idrocarburi e sarà sede di un Museo di Arte Contemporanea.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -774,6 +805,7 @@
                 type: "Caratterizzazione ambientale",
                 cardSubtitle: "Caratterizzazione ambientale area dismessa.",
                 images: ["./assets/img/saffa1.jpg", "./assets/img/saffa2.jpg"], 
+                tags: ["bonifica"],
                 desc: `
                 <p>L’area deve cambiare destinazione d’uso e sarà totalmente demolita.</p>
                 <p>Tecnitalia Ingegneria è stata individuata come partner nel pool di progettazione sia per determinare i costi della futura bonifica sia per svolgere l’attività di caratterizzazione iniziale del sito.</p>`
@@ -786,6 +818,7 @@
                 type: "Piano di Caratterizzazione e Bonifica",
                 cardSubtitle: "Progetto Operativo di Bonifica, Analisi Rischio e DL.",
                 images: ["./assets/img/sirio1.jpg", "./assets/img/sirio2.jpg"], 
+                tags: ["bonifica", "demolizione"],
                 desc: `
                 <p>Il sito era totalmente dismesso e presentava contaminazioni da metalli e idrocarburi.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -804,6 +837,7 @@
                 type: "Progetto Operativo di Bonifica e Piano Rimozione",
                 cardSubtitle: "Bonifica con Analisi di Rischio e Piano Rimozione Rifiuti.",
                 images: ["./assets/img/feltrinelli1.jpg", "./assets/img/feltrinelli2.jpg"], 
+                tags: ["bonifica", "rifiuti"],
                 desc: `
                 <p>Il sito era totalmente dismesso e presentava contaminazioni da metalli e idrocarburi oltre a grandi quantità di rifiuti interrati. Nell’area è stata dapprima ubicata la sede temporanea della Triennale di Milano in Bovisa (TBVS) e successivamente uno studentato universitario.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -822,6 +856,7 @@
                 type: "Progetto Definitivo di Bonifica e Direzione Lavori",
                 cardSubtitle: "Progetto Definitivo di Bonifica e Direzione Lavori.",
                 images: ["./assets/img/termoraggi1.jpg", "./assets/img/termoraggi2.jpg"], 
+                tags: ["bonifica", "demolizione"],
                 desc: `
                 <p>Il sito, già sede di un deposito di carburanti, deve cambiare destinazione d’uso ed è stato totalmente demolito. L’area era già in fase di caratterizzazione quando è stata coinvolta Tecnitalia Ingegneria per giungere alla progettazione definitiva degli interventi di bonifica.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -838,6 +873,7 @@
                 type: "Progetti Operativi di Bonifica e Direzione Lavori",
                 cardSubtitle: "Bonifica da MCA/FAV e Demolizione edifici.",
                 images: ["./assets/img/novaceta1.jpg", "./assets/img/novaceta2.jpg"], 
+                tags: ["bonifica", "amianto", "demolizione"],
                 desc: `
                 <p>Il sito, già sede della società Novaceta, SNIA e Enercel, è stato caratterizzato, bonificato dall’amianto e dalle FAV e totalmente demolito. Sono stati redatti 3 progetti di bonifica per i diversi lotti (Area Sporting, Area Parking e Area di sviluppo).</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -856,6 +892,7 @@
                 type: "Progetto Operativo di Bonifica con Analisi di Rischio",
                 cardSubtitle: "Progetto Operativo di Bonifica con Analisi di Rischio.",
                 images: ["./assets/img/bovisa1.jpg", "./assets/img/bovisa2.jpg"], 
+                tags: ["bonifica", "acque"],
                 desc: `
                 <p>L’area è oggetto di interventi di riqualificazione per integrarsi con quella adiacente di proprietà del Politecnico di Milano e del Comune di Milano.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di redigere un progetto di bonifica che si integrasse con quello architettonico, mediante:</strong></p>
@@ -874,6 +911,7 @@
                 type: "Caratterizzazione e Progetto Operativo di Bonifica",
                 cardSubtitle: "Caratterizzazione e Progetto Operativo di Bonifica.",
                 images: ["./assets/img/reggiani1.jpg", "./assets/img/reggiani2.jpg"], 
+                tags: ["bonifica"],
                 desc: `
                 <p>L’area è oggetto di interventi di riqualificazione per lo sviluppo di un nuovo polo universitario e altre funzioni.</p>
                 <p>Tecnitalia Ingegneria ha ricevuto l’incarico di caratterizzare l’area e redigere il progetto di bonifica. Si è conclusa la fase di caratterizzazione e le attività sono sospese per il fallimento della Committente.</p>`
@@ -886,6 +924,7 @@
                 type: "Decommissioning area industriale",
                 cardSubtitle: "Decommissioning area industriale Fibre Ottiche.",
                 images: ["./assets/img/prysmian1.jpg", "./assets/img/prysmian2.jpg"], 
+                tags: ["demolizione"],
                 desc: `
                 <p>L’area è oggetto di dismissione per compravendita. Poiché molte macchine per la filatura della fibra ottica sono coperte da brevetto è necessario distruggerle e allontanarle dall’area. Altri macchinari verranno smontati e trasportati in altro stabilimento della Prysmian.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di redigere un progetto di decommissioning, gestire pratiche amministrative, e ricoprire i ruoli di:</strong></p>
@@ -899,25 +938,50 @@
 
         // ====================================================================
 
-        // Generazione Automatica delle Card nello Slider
         const sliderContainer = document.getElementById('projects-slider');
-        projectsData.forEach((p, index) => {
-            const cardHTML = `
-                <div class="project-card" onclick="openProject(${index})">
-                    <div class="p-img-box">
-                        <img src="${p.images[0]}" alt="${p.title}">
-                        <div class="hover-reveal">APRI SCHEDA</div>
-                    </div>
-                    <div class="p-content">
-                        <h4 style="color:var(--blue); margin-bottom:5px;">${p.title}</h4>
-                        <p style="margin:0; font-size:0.9rem">${p.cardSubtitle}</p>
-                    </div>
-                </div>
-            `;
-            sliderContainer.innerHTML += cardHTML;
-        });
 
-        // ANIMAZIONI GSAP (Inizializzate dopo la generazione delle card)
+        // Funzione che stampa a schermo le card filtrate
+        function renderProjects(filterTag = 'tutti') {
+            sliderContainer.innerHTML = ''; // Svuota lo slider
+            
+            projectsData.forEach((p, index) => {
+                // Se il filtro è "tutti" o se il progetto ha il tag selezionato, lo stampiamo
+                if (filterTag === 'tutti' || (p.tags && p.tags.includes(filterTag))) {
+                    const cardHTML = `
+                        <div class="project-card" onclick="openProject(${index})">
+                            <div class="p-img-box">
+                                <img src="${p.images[0]}" alt="${p.title}">
+                                <div class="hover-reveal">APRI SCHEDA</div>
+                            </div>
+                            <div class="p-content">
+                                <h4 style="color:var(--blue); margin-bottom:5px;">${p.title}</h4>
+                                <p style="margin:0; font-size:0.9rem">${p.cardSubtitle}</p>
+                            </div>
+                        </div>
+                    `;
+                    sliderContainer.innerHTML += cardHTML;
+                }
+            });
+        }
+
+        // Funzione attivata dal click sui bottoni del filtro
+        function filterProjects(tag, btnElement) {
+            // Toglie l'evidenziatore blu a tutti i bottoni
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            // Lo aggiunge solo a quello cliccato
+            btnElement.classList.add('active');
+            
+            // Renderizza i nuovi progetti
+            renderProjects(tag);
+            
+            // Riporta lo slider orizzontale all'inizio in modo fluido
+            document.getElementById('projects-slider').scrollTo({ left: 0, behavior: 'smooth' });
+        }
+
+        // Carica tutti i progetti appena il sito viene aperto
+        renderProjects('tutti');
+
+        // ANIMAZIONI GSAP
         gsap.registerPlugin(ScrollTrigger);
         gsap.from("#hero-content", { y:50, opacity:0, duration:1.5, delay:0.5 });
         gsap.to(".hero-bg", {
@@ -935,7 +999,7 @@
 
         // SCORRIMENTO SLIDER ESTERNO
         function scrollSlider(direction) {
-            const scrollAmount = 380; // Larghezza card + gap
+            const scrollAmount = 380; 
             document.getElementById('projects-slider').scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
         }
 
@@ -949,7 +1013,6 @@
             currentImageIndex = 0;
             const p = projectsData[index];
             
-            // Popola i testi
             document.getElementById('m-title').innerHTML = p.title;
             document.getElementById('m-client').innerHTML = p.client;
             document.getElementById('m-period').innerHTML = p.period;
@@ -957,9 +1020,8 @@
             document.getElementById('m-type').innerHTML = p.type;
             document.getElementById('m-desc').innerHTML = p.desc;
             
-            // Popola le foto
             const wrapper = document.getElementById('m-slides-wrapper');
-            wrapper.innerHTML = ''; // Pulisce foto precedenti
+            wrapper.innerHTML = ''; 
             p.images.forEach((imgSrc, i) => {
                 const img = document.createElement('img');
                 img.src = imgSrc;
@@ -967,38 +1029,32 @@
                 wrapper.appendChild(img);
             });
 
-            // Mostra o nascondi le frecce se c'è solo una foto
             const showArrows = p.images.length > 1 ? 'block' : 'none';
             document.getElementById('m-btn-prev').style.display = showArrows;
             document.getElementById('m-btn-next').style.display = showArrows;
 
             modal.classList.add('active');
-            lenis.stop(); // Ferma lo scroll di sfondo
+            lenis.stop(); 
         }
 
-        // Funzione per scorrere le foto dentro al modal
         function changeModalImg(direction) {
             const p = projectsData[currentProjectIndex];
             const slides = document.querySelectorAll('.m-slide');
             
-            // Rimuovi classe attiva dalla foto corrente
             slides[currentImageIndex].classList.remove('active');
             
-            // Calcola la nuova foto
             currentImageIndex += direction;
             if (currentImageIndex < 0) currentImageIndex = p.images.length - 1;
             if (currentImageIndex >= p.images.length) currentImageIndex = 0;
             
-            // Aggiungi classe attiva alla nuova foto
             slides[currentImageIndex].classList.add('active');
         }
 
         function closeProject() {
             modal.classList.remove('active');
-            lenis.start(); // Riattiva lo scroll di sfondo
+            lenis.start(); 
         }
 
-        // Chiude il modal cliccando fuori dal riquadro bianco
         modal.addEventListener('click', (e) => {
             if(e.target === modal) closeProject();
         });
