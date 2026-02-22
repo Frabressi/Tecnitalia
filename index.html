@@ -16,7 +16,7 @@
     <style>
         /* --- CSS BASE --- */
         :root { --blue: #00427A; --text: #1d1d1f; --gray: #f5f5f7; }
-        body, html { margin: 0; padding: 0; font-family: 'Manrope', sans-serif; overflow-x: hidden; width: 100%; }
+        body, html { margin: 0; padding: 0; font-family: 'Manrope', sans-serif; overflow-x: clip; width: 100%; }
         
         body::-webkit-scrollbar { display: none; }
         body { -ms-overflow-style: none; scrollbar-width: none; }
@@ -233,6 +233,7 @@
         
         /* --- FOOTER --- */
         .footer-sec { background: #111; color: #888; padding: 60px 10%; }
+        .footer-sec p, .footer-sec strong { color: #cccccc; }
         .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
         .form-box input, .form-box textarea { width: 100%; padding: 12px; margin-bottom: 10px; background: #222; border: 1px solid #333; color: white; border-radius: 6px; box-sizing: border-box;}
         .submit-btn { background: var(--blue); color: white; border: none; padding: 12px 25px; border-radius: 25px; cursor: pointer; width: 100%; font-weight: bold; text-transform: uppercase;}
