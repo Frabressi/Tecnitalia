@@ -108,9 +108,12 @@
         
         .div-img-wrapper { 
             width: 100%; height: 600px; 
-            border-radius: 20px; overflow: hidden; position: sticky; top: 120px;
+            border-radius: 20px; overflow: hidden; position: relative; 
         }
-        .div-img { width: 100%; height: 100%; object-fit: cover; }
+        .div-img { 
+            width: 100%; height: 130%; /* L'immagine è più alta del box */
+            object-fit: cover; position: absolute; top: -15%; left: 0; 
+        }
         .div-text h3 { font-size: 2.5rem; color: var(--blue); margin-bottom: 20px; }
 
         /* --- FILTRI PROGETTI --- */
@@ -1060,6 +1063,23 @@
             if(e.target === modal) closeProject();
         });
 
+        // ====================================================================
+        // EFFETTO PARALLASSE (Il box sta fermo, l'immagine dentro scorre)
+        // ====================================================================
+        gsap.utils.toArray(".div-img-wrapper").forEach(wrapper => {
+            const img = wrapper.querySelector(".div-img");
+            gsap.to(img, {
+                y: "20%", // Muove l'immagine verso il basso mentre tu scorri la pagina
+                ease: "none",
+                scrollTrigger: {
+                    trigger: wrapper,
+                    start: "top bottom", // Inizia appena il box entra nello schermo
+                    end: "bottom top",   // Finisce quando esce
+                    scrub: true          // Rende il movimento fluido in base alla rotellina del mouse
+                }
+            });
+        });
+        
     </script>
 </body>
 </html>
