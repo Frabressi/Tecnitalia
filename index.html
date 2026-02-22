@@ -259,10 +259,22 @@
             .m-header { height: 250px; } 
             .m-scroll-content { padding: 25px; }
             
-            .projects-grid { padding: 0 5vw 20px 5vw; gap: 15px; }
-            .project-card { min-width: 80vw; scroll-snap-align: center; }
-            .slider-btn { display: none; } 
-        }
+            .projects-grid { 
+                padding: 0 0 20px 0; /* Rimuove il padding laterale per sfruttare tutto lo schermo */
+                gap: 15px; 
+            }
+            .project-card { 
+                min-width: 240px; /* Card molto più stretta */
+                scroll-snap-align: start; 
+            }
+            .p-img-box { 
+                height: 180px; /* Rimpicciolisce un po' l'altezza della foto per proporzionarla */
+            }
+            .p-content { 
+                padding: 15px; /* Riduce lo spazio bianco interno per far respirare il testo */
+            }
+            .slider-btn { display: none; } /* Su mobile si scorre col dito */
+            }
     </style>
 </head>
 <body>
