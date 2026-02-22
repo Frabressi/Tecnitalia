@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tecnitalia Group | Ingegneria e Servizi Ambientali</title>
-    <meta name="description" content="Tecnitalia Group: Leader dal 1986 in Ingegneria Ambientale, Bonifiche, Sicurezza e Analisi di Rischio Industriale. Soluzioni complete per aziende e ambiente.">
+    <meta name="description" content="Tecnitalia Group: Leader dal 1986 in Ingegneria Ambientale, Bonifiche, Sicurezza e Analisi di Rischio Industriale.">
     
-    <!-- 1. LIBRERIE STABILI (GSAP + LENIS BUNDLED) -->
+    <!-- 1. LIBRERIE GSAP + LENIS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
@@ -35,7 +35,7 @@
             width: 100%;
         }
 
-        /* Nascondiamo la scrollbar nativa del body per estetica (Lenis gestisce lo scroll) */
+        /* Nascondiamo scrollbar nativa body */
         body::-webkit-scrollbar { display: none; }
         body { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -43,53 +43,63 @@
         p, li { line-height: 1.6; color: var(--text-light); font-size: 1.1rem; margin-bottom: 20px; }
         ul { padding-left: 20px; margin-bottom: 20px;}
         
-        /* --- NAVIGAZIONE CORRETTA --- */
+        /* --- NAVIGAZIONE & LOGO FIX --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 25px 5%; box-sizing: border-box;
             display: flex; justify-content: space-between; align-items: center;
             z-index: 1000; 
-            background: transparent; /* Parte trasparente */
-            transition: all 0.4s ease; /* Transizione fluida */
+            background: transparent; /* Trasparente all'inizio */
+            transition: all 0.4s ease;
         }
 
-        /* Classe aggiunta via JS quando si scorre */
         nav.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 15px 5%; /* Si rimpicciolisce leggermente */
+            background: rgba(255, 255, 255, 0.98); /* Bianco pieno allo scroll */
+            padding: 15px 5%;
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
 
-        .logo-img { height: 40px; width: auto; display: block; }
-        
-        .nav-links {
-            display: flex; align-items: center;
+        .logo-container {
+            text-decoration: none;
+            background: transparent !important; /* Forza trasparenza */
+            display: block;
+        }
+
+        .logo-img { 
+            height: 40px; 
+            width: auto; 
+            display: block;
+            transition: filter 0.3s;
+            /* TRUCCO VISIBILITÀ LOGO:
+               Se il logo è nero e lo sfondo è scuro, non si vede.
+               Invertiamo i colori per farlo diventare BIANCO quando la nav è trasparente.
+            */
+            filter: brightness(0) invert(1); 
+        }
+
+        /* Quando scorri e lo sfondo diventa bianco, il logo torna al colore originale (NERO/BLU) */
+        nav.scrolled .logo-img {
+            filter: none;
         }
         
+        .nav-links { display: flex; align-items: center; }
         .nav-links a {
-            text-decoration: none; color: white; /* Bianco all'inizio su sfondo scuro (hero) */
+            text-decoration: none; color: white; /* Testo bianco su Hero */
             font-weight: 600; margin-left: 30px;
             font-size: 0.9rem; transition: color 0.3s; text-transform: uppercase;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Ombra per leggere su immagini */
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
         
-        /* Quando la nav è bianca, i link diventano scuri */
         nav.scrolled .nav-links a {
-            color: var(--text);
+            color: var(--text); /* Testo scuro su sfondo bianco */
             text-shadow: none;
         }
         nav.scrolled .nav-links a:hover { color: var(--blue); }
 
-        .hamburger { 
-            display: none; 
-            font-size: 1.8rem; 
-            cursor: pointer; 
-            color: white; /* Hamburger bianco su Hero */
-        }
-        nav.scrolled .hamburger { color: var(--text); } /* Hamburger scuro su scroll */
+        .hamburger { display: none; font-size: 1.8rem; cursor: pointer; color: white; }
+        nav.scrolled .hamburger { color: var(--text); }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO --- */
         .hero {
             height: 100vh; width: 100%; position: relative; overflow: hidden;
             display: flex; align-items: center; justify-content: center;
@@ -101,7 +111,7 @@
         }
         .hero-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.3); z-index: 2; 
+            background: rgba(0,0,0,0.4); z-index: 2; 
         }
         .hero-text {
             position: relative; z-index: 3; color: white; text-align: center; max-width: 900px; padding: 20px;
@@ -109,11 +119,10 @@
         .hero h1 { font-size: clamp(3rem, 6vw, 5rem); line-height: 1.1; margin-bottom: 20px; text-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .hero p { color: rgba(255,255,255,0.9); font-size: 1.5rem; text-shadow: 0 5px 15px rgba(0,0,0,0.3); }
 
-        /* --- SEZIONI GENERICHE --- */
+        /* --- LAYOUT GENERALE --- */
         .section { padding: 120px 10%; position: relative; }
         .bg-gray { background-color: var(--gray); }
         
-        /* --- CHI SIAMO --- */
         .stats-grid {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 60px;
             border-top: 1px solid #ddd; padding-top: 40px;
@@ -121,27 +130,18 @@
         .stat-num { font-size: 3.5rem; color: var(--blue); font-weight: 800; display: block; }
         .stat-label { font-size: 0.9rem; text-transform: uppercase; font-weight: 600; color: var(--text); }
 
-        /* --- DIVISIONI --- */
-        .division-block {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 0;
-        }
+        .division-block { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
         .division-block.reversed { direction: rtl; } 
         .division-block.reversed .div-text { direction: ltr; }
-
         .div-img-wrapper {
             width: 100%; height: 500px; overflow: hidden; border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1); position: relative;
         }
-        .div-img {
-            width: 100%; height: 140%; object-fit: cover;
-            position: absolute; top: -20%;
-        }
+        .div-img { width: 100%; height: 140%; object-fit: cover; position: absolute; top: -20%; }
         .div-text h3 { font-size: 3rem; color: var(--blue); margin-bottom: 20px; }
 
         /* --- PROGETTI --- */
-        .projects-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; margin-top: 60px;
-        }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; margin-top: 60px; }
         .project-card {
             background: white; border-radius: 16px; overflow: hidden; cursor: pointer;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.4s ease;
@@ -183,50 +183,56 @@
             font-weight: 700; border-radius: 30px; cursor: pointer; text-transform: uppercase; width: 100%;
         }
 
-        /* --- MODAL (POPUP PROGETTI) --- */
+        /* --- MODAL FIX DEFINITIVO --- */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
-            z-index: 9999; opacity: 0; visibility: hidden; transition: all 0.3s;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
+            z-index: 9999; opacity: 0; visibility: hidden; transition: opacity 0.3s;
             display: flex; align-items: center; justify-content: center;
-            /* Importante per permettere lo scroll interno se necessario */
-            overflow: hidden; 
         }
         .modal.active { opacity: 1; visibility: visible; }
         
         .modal-box {
-            background: white; width: 90%; max-width: 900px; 
-            max-height: 90vh; /* Altezza massima 90% della viewport */
-            overflow-y: auto; /* Abilita lo scorrimento verticale interno */
+            background: white; 
+            width: 90%; max-width: 900px; 
+            max-height: 90vh; /* Non supera il 90% dell'altezza schermo */
+            overflow-y: auto; /* SCROLL ABILITATO SUL CONTENUTO */
             border-radius: 20px; position: relative;
-            transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: scale(0.9); transition: transform 0.3s;
+            display: flex; flex-direction: column;
             
-            /* FIX SCROLL MOBILE */
-            -webkit-overflow-scrolling: touch; 
+            /* Scroll fluido su mobile */
+            -webkit-overflow-scrolling: touch;
             overscroll-behavior: contain;
         }
-        
-        /* Personalizzazione Scrollbar Modale */
-        .modal-box::-webkit-scrollbar { width: 8px; display: block; }
-        .modal-box::-webkit-scrollbar-track { background: #f1f1f1; }
-        .modal-box::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
-        .modal-box::-webkit-scrollbar-thumb:hover { background: #aaa; }
-
         .modal.active .modal-box { transform: scale(1); }
-        
+
         .close-modal {
-            position: sticky; /* Sticky per rimanere visibile mentre scorri */
-            top: 20px; left: calc(100% - 60px); 
-            float: right; margin-right: 20px; margin-top: 20px;
+            position: absolute; top: 15px; right: 15px; 
             width: 40px; height: 40px;
             background: white; border-radius: 50%; border: none; cursor: pointer; font-size: 24px;
-            z-index: 100; box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+            z-index: 20; /* Sopra a tutto */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
             display: flex; align-items: center; justify-content: center;
         }
         
-        .m-header { height: 350px; position: relative;}
-        .m-header img { width: 100%; height: 100%; object-fit: cover; }
-        .m-body { padding: 40px 50px; }
+        /* FIX IMMAGINE CHE SBORDA */
+        .m-header {
+            width: 100%;
+            position: relative;
+            /* Rimosso height fissa per evitare sovrapposizioni */
+        }
+        .m-header img { 
+            width: 100%; 
+            height: auto; 
+            max-height: 50vh; /* Limita l'altezza immagine a metà schermo */
+            object-fit: cover; 
+            display: block; /* Toglie spazi bianchi sotto le immagini */
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .m-body { padding: 40px 50px; background: white; }
+        
         .m-specs {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
             background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 1px solid #eee;
@@ -234,31 +240,22 @@
         .m-specs strong { display: block; color: var(--blue); margin-bottom: 4px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;}
         .m-specs span { color: #333; font-weight: 600; }
 
-        /* --- RESPONSIVE & MOBILE MENU CORRETTO --- */
+        /* --- MOBILE MENU --- */
         @media(max-width: 900px) {
-            .hamburger { display: block; z-index: 1001; }
+            .hamburger { display: block; position:relative; z-index: 1002; }
             
-            /* Menu Mobile che scende dall'alto */
             .nav-links { 
-                position: absolute; top: 100%; left: 0; width: 100%;
+                position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
                 background: white;
-                flex-direction: column; 
-                padding: 20px 0;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-                /* Animazione comparsa */
-                opacity: 0; visibility: hidden; transform: translateY(-20px);
+                flex-direction: column; justify-content: center;
+                opacity: 0; visibility: hidden; 
                 transition: all 0.3s ease;
+                padding-top: 60px; /* Spazio per la barra in alto */
             }
+            .nav-links.active { opacity: 1; visibility: visible; }
             
-            /* Quando attivo */
-            .nav-links.active {
-                opacity: 1; visibility: visible; transform: translateY(0);
-            }
-
             .nav-links a {
-                color: var(--text); /* Nel menu mobile i link sono scuri */
-                margin: 15px 0;
-                display: block;
+                color: var(--dark); font-size: 1.5rem; margin: 20px 0;
                 text-shadow: none;
             }
 
@@ -266,6 +263,17 @@
             .stats-grid { grid-template-columns: 1fr 1fr; }
             .division-block, .division-block.reversed, .footer-grid { grid-template-columns: 1fr; }
             .m-body { padding: 30px 20px; }
+            
+            /* Logo mobile fix */
+            .logo-img { filter: none; } /* Su mobile, se il menu apre bianco, il logo deve vedersi */
+            nav.scrolled .logo-img { filter: none; }
+            
+            /* Se la nav non è scrolled, su mobile il logo deve essere bianco? 
+               Dipende dallo sfondo. Lasciamo il filtro dinamico anche qui per coerenza */
+             .logo-img { filter: brightness(0) invert(1); }
+             nav.scrolled .logo-img { filter: none; }
+             /* Quando il menu è aperto (sfondo bianco), logo nero */
+             nav .nav-links.active ~ .logo-container .logo-img { filter: none; z-index: 1002; position: relative; }
         }
     </style>
 </head>
@@ -273,7 +281,6 @@
 
     <nav>
         <a href="#" class="logo-container">
-            <!-- Assicurati che logo.png sia un'immagine con sfondo trasparente -->
             <img src="./assets/img/logo.png" alt="Tecnitalia Group" class="logo-img">
         </a>
         <div class="nav-links">
@@ -287,7 +294,6 @@
     </nav>
 
     <header class="hero">
-        <!-- IMMAGINE DI SFONDO -->
         <div class="hero-bg" id="hero-bg" style="background-image: url('./assets/img/scavo.jpg');"></div>
         <div class="hero-overlay"></div>
         <div class="hero-text" id="hero-content">
@@ -355,7 +361,6 @@
         </div>
 
         <div class="projects-grid">
-            <!-- 1. Cartiere Binda -->
             <div class="project-card fade-element" onclick="openProject(0)">
                 <div class="p-img-box">
                     <img src="./assets/img/binda.jpg" alt="Ex Cartiere Binda">
@@ -367,7 +372,6 @@
                 </div>
             </div>
 
-            <!-- 2. Industrie Chimiche -->
             <div class="project-card fade-element" onclick="openProject(1)">
                 <div class="p-img-box">
                     <img src="./assets/img/chimiche.jpg" alt="Industrie Chimiche">
@@ -379,7 +383,6 @@
                 </div>
             </div>
 
-            <!-- 3. Cascina Merlata -->
             <div class="project-card fade-element" onclick="openProject(2)">
                 <div class="p-img-box">
                     <img src="./assets/img/merlata.jpg" alt="Cascina Merlata">
@@ -396,34 +399,29 @@
     <section id="team" class="section">
         <h2 class="fade-element" style="text-align:center; font-size:2.5rem; margin-bottom:50px; color:var(--blue);">Il Nostro Team</h2>
         <div class="team-container">
-            
             <div class="member fade-element">
                 <img src="./assets/img/giorgio.jpg" alt="Giorgio Bressi">
                 <h4>Ing. Giorgio Bressi</h4>
                 <span>Direttore Tecnico</span><br>
                 <a href="https://www.linkedin.com/in/giorgio-bressi-940741a4/" class="lnk-btn" target="_blank">LinkedIn</a>
             </div>
-
             <div class="member fade-element">
                 <img src="./assets/img/stefano.jpg" alt="Stefano Micco">
                 <h4>Ing. Stefano Micco</h4>
                 <span>Resp. Operativo</span><br>
                 <a href="https://www.linkedin.com/in/stefano-micco-932b15b8/" class="lnk-btn" target="_blank">LinkedIn</a>
             </div>
-
             <div class="member fade-element">
                 <img src="./assets/img/elisabetta.jpg" alt="Elisabetta Pavesi">
                 <h4>Arch. Elisabetta Pavesi</h4>
                 <span>Architetto</span>
             </div>
-
             <div class="member fade-element">
                 <img src="./assets/img/matteo.jpg" alt="Matteo Bovio">
                 <h4>Ing. Matteo Bovio</h4>
                 <span>Ing. Ambientale</span><br>
                 <a href="https://www.linkedin.com/in/matteo-bovio-9937ba2a0/" class="lnk-btn" target="_blank">LinkedIn</a>
             </div>
-            
             <div class="member fade-element">
                 <img src="./assets/img/francesco.jpg" alt="Francesco Bressi">
                 <h4>Ing. Francesco Bressi</h4>
@@ -462,15 +460,13 @@
                 <img id="m-img" src="">
             </div>
             <div class="m-body">
-                <h2 id="m-title" style="font-size:2.5rem; color:var(--blue); margin-bottom:20px;"></h2>
-                
+                <h2 id="m-title" style="font-size:2.5rem; color:var(--blue); margin-bottom:20px; line-height: 1.2;"></h2>
                 <div class="m-specs">
                     <div><strong>Committente</strong> <span id="m-client"></span></div>
                     <div><strong>Periodo</strong> <span id="m-period"></span></div>
                     <div><strong>Importo</strong> <span id="m-val"></span></div>
                     <div><strong>Attività</strong> <span id="m-type"></span></div>
                 </div>
-
                 <div id="m-desc" style="line-height:1.8; color:#333;"></div>
             </div>
         </div>
@@ -478,29 +474,28 @@
 
     <!-- SCRIPT -->
     <script>
-        // GESTIONE SCROLL FLUIDO (LENIS)
+        // GESTIONE SCROLL (LENIS)
         const lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true
         });
-
         function raf(time) {
             lenis.raf(time);
             requestAnimationFrame(raf);
         }
         requestAnimationFrame(raf);
 
-        // INTEGRAZIONE GSAP
         gsap.registerPlugin(ScrollTrigger);
 
-        // --- GESTIONE NAVBAR SCROLL & MOBILE ---
+        // --- NAVBAR SCROLL & MOBILE ---
         const nav = document.querySelector('nav');
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
         const navLinksItems = document.querySelectorAll('.nav-links a');
+        const logoImg = document.querySelector('.logo-img');
 
-        // 1. Cambio colore navbar allo scroll
+        // Scroll Effect
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
                 nav.classList.add('scrolled');
@@ -509,29 +504,37 @@
             }
         });
 
-        // 2. Click Hamburger Mobile
+        // Mobile Menu
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            
-            // Cambia l'icona da ☰ a X (opzionale, ma carino)
             if(navLinks.classList.contains('active')){
                 hamburger.innerHTML = "×";
-                hamburger.style.fontSize = "2.5rem";
+                hamburger.style.color = "var(--text)"; // X scura su sfondo bianco
+                logoImg.style.filter = "none"; // Logo nero su sfondo bianco
             } else {
                 hamburger.innerHTML = "☰";
-                hamburger.style.fontSize = "1.8rem";
+                // Ripristina colore in base allo scroll
+                if(window.scrollY <= 50) {
+                   hamburger.style.color = "white";
+                   logoImg.style.filter = "brightness(0) invert(1)";
+                } else {
+                   hamburger.style.color = "var(--text)";
+                }
             }
         });
 
-        // 3. Chiudi menu quando clicchi un link
         navLinksItems.forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
                 hamburger.innerHTML = "☰";
+                if(window.scrollY <= 50) {
+                   hamburger.style.color = "white";
+                   logoImg.style.filter = "brightness(0) invert(1)";
+                }
             });
         });
 
-        // --- ANIMAZIONI HERO & SCROLL ---
+        // --- ANIMAZIONI ---
         gsap.from("#hero-content", {
             y: 50, opacity: 0, duration: 1.5, ease: "power3.out", delay: 0.5
         });
@@ -580,13 +583,7 @@
                 val: "2.700.000 €",
                 type: "Bonifica & DL",
                 img: "./assets/img/binda.jpg", 
-                desc: `<p>Il sito era totalmente dismesso e presentava contaminazioni da PCB, metalli e idrocarburi. L’area ha cambiato destinazione ed è stata trasformata in un cantiere residenziale.</p>
-                       <ul>
-                           <li>Redazione del piano di caratterizzazione.</li>
-                           <li>Realizzazione dell’indagine Ambientale.</li>
-                           <li>Redazione del progetto definitivo di bonifica.</li>
-                           <li>Direzione lavori interventi di bonifica, rimozione MCA e demolizione.</li>
-                       </ul>`
+                desc: `<p>Il sito era totalmente dismesso e presentava contaminazioni da PCB, metalli e idrocarburi. L’area ha cambiato destinazione ed è stata trasformata in un cantiere residenziale.</p><ul><li>Redazione del piano di caratterizzazione.</li><li>Realizzazione dell’indagine Ambientale.</li><li>Redazione del progetto definitivo di bonifica.</li><li>Direzione lavori interventi di bonifica, rimozione MCA e demolizione.</li></ul>`
             },
             {
                 title: "Ex Industrie Chimiche Baslini",
@@ -595,13 +592,7 @@
                 val: "20.000.000 €",
                 type: "Progetto Operativo & DL",
                 img: "./assets/img/chimiche.jpg",
-                desc: `<p>Il sito è totalmente dismesso e presenta contaminazioni da metalli, idrocarburi, solventi e pesticidi.</p>
-                       <ul>
-                           <li>Redazione del progetto operativo di bonifica.</li>
-                           <li>Direzione lavori.</li>
-                           <li>Redazione Variante progetto con Analisi del rischio.</li>
-                           <li>Modello matematico per sbarramento idraulico.</li>
-                       </ul>`
+                desc: `<p>Il sito è totalmente dismesso e presenta contaminazioni da metalli, idrocarburi, solventi e pesticidi.</p><ul><li>Redazione del progetto operativo di bonifica.</li><li>Direzione lavori.</li><li>Redazione Variante progetto con Analisi del rischio.</li><li>Modello matematico per sbarramento idraulico.</li></ul>`
             },
             {
                 title: "Cascina Merlata",
@@ -610,15 +601,11 @@
                 val: "2.000.000 €",
                 type: "Progetto Operativo",
                 img: "./assets/img/merlata.jpg",
-                desc: `<p>L’area verrà trasformata in un sistema di variabilità e urbanizzazioni necessarie per il collegamento tra il quartiere Cascina Merlata e la zona EXPO2015.</p>
-                       <ul>
-                           <li>Redazione del progetto operativo di bonifica.</li>
-                           <li>Direzione lavori.</li>
-                       </ul>`
+                desc: `<p>L’area verrà trasformata in un sistema di variabilità e urbanizzazioni necessarie per il collegamento tra il quartiere Cascina Merlata e la zona EXPO2015.</p><ul><li>Redazione del progetto operativo di bonifica.</li><li>Direzione lavori.</li></ul>`
             }
         ];
 
-        // --- GESTIONE MODAL ---
+        // --- MODAL LOGIC ---
         const modal = document.getElementById('projectModal');
         
         function openProject(index) {
@@ -632,19 +619,17 @@
             document.getElementById('m-desc').innerHTML = p.desc;
             
             modal.classList.add('active');
-            lenis.stop(); // Blocca lo scroll della pagina principale
+            lenis.stop();
         }
 
         function closeProject() {
             modal.classList.remove('active');
-            lenis.start(); // Riabilita lo scroll della pagina
+            lenis.start();
         }
 
-        // Chiudi cliccando fuori
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeProject();
         });
-
     </script>
 </body>
 </html>
