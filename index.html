@@ -35,7 +35,7 @@
             width: 100%;
         }
 
-        /* Nascondiamo la scrollbar nativa per estetica */
+        /* Nascondiamo la scrollbar nativa del body per estetica (Lenis gestisce lo scroll) */
         body::-webkit-scrollbar { display: none; }
         body { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -43,21 +43,51 @@
         p, li { line-height: 1.6; color: var(--text-light); font-size: 1.1rem; margin-bottom: 20px; }
         ul { padding-left: 20px; margin-bottom: 20px;}
         
-        /* --- NAVIGAZIONE --- */
+        /* --- NAVIGAZIONE CORRETTA --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
-            padding: 20px 5%; box-sizing: border-box;
+            padding: 25px 5%; box-sizing: border-box;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05);
+            z-index: 1000; 
+            background: transparent; /* Parte trasparente */
+            transition: all 0.4s ease; /* Transizione fluida */
         }
-        .logo-img { height: 40px; width: auto; }
+
+        /* Classe aggiunta via JS quando si scorre */
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%; /* Si rimpicciolisce leggermente */
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .logo-img { height: 40px; width: auto; display: block; }
+        
+        .nav-links {
+            display: flex; align-items: center;
+        }
+        
         .nav-links a {
-            text-decoration: none; color: var(--text); font-weight: 600; margin-left: 30px;
+            text-decoration: none; color: white; /* Bianco all'inizio su sfondo scuro (hero) */
+            font-weight: 600; margin-left: 30px;
             font-size: 0.9rem; transition: color 0.3s; text-transform: uppercase;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Ombra per leggere su immagini */
         }
-        .nav-links a:hover { color: var(--blue); }
-        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; }
+        
+        /* Quando la nav è bianca, i link diventano scuri */
+        nav.scrolled .nav-links a {
+            color: var(--text);
+            text-shadow: none;
+        }
+        nav.scrolled .nav-links a:hover { color: var(--blue); }
+
+        .hamburger { 
+            display: none; 
+            font-size: 1.8rem; 
+            cursor: pointer; 
+            color: white; /* Hamburger bianco su Hero */
+        }
+        nav.scrolled .hamburger { color: var(--text); } /* Hamburger scuro su scroll */
 
         /* --- HERO SECTION --- */
         .hero {
@@ -66,13 +96,12 @@
         }
         .hero-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 120%;
-            /* L'immagine viene impostata inline nell'HTML per facilità */
             background-size: cover; background-position: center;
             z-index: 1; will-change: transform;
         }
         .hero-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); z-index: 2; /* Scurisce l'immagine per leggere il testo */
+            background: rgba(0,0,0,0.3); z-index: 2; 
         }
         .hero-text {
             position: relative; z-index: 3; color: white; text-align: center; max-width: 900px; padding: 20px;
@@ -154,26 +183,48 @@
             font-weight: 700; border-radius: 30px; cursor: pointer; text-transform: uppercase; width: 100%;
         }
 
-        /* --- MODAL --- */
+        /* --- MODAL (POPUP PROGETTI) --- */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
             z-index: 9999; opacity: 0; visibility: hidden; transition: all 0.3s;
             display: flex; align-items: center; justify-content: center;
+            /* Importante per permettere lo scroll interno se necessario */
+            overflow: hidden; 
         }
         .modal.active { opacity: 1; visibility: visible; }
+        
         .modal-box {
-            background: white; width: 90%; max-width: 900px; max-height: 90vh;
-            overflow-y: auto; border-radius: 20px; position: relative;
+            background: white; width: 90%; max-width: 900px; 
+            max-height: 90vh; /* Altezza massima 90% della viewport */
+            overflow-y: auto; /* Abilita lo scorrimento verticale interno */
+            border-radius: 20px; position: relative;
             transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            
+            /* FIX SCROLL MOBILE */
+            -webkit-overflow-scrolling: touch; 
+            overscroll-behavior: contain;
         }
+        
+        /* Personalizzazione Scrollbar Modale */
+        .modal-box::-webkit-scrollbar { width: 8px; display: block; }
+        .modal-box::-webkit-scrollbar-track { background: #f1f1f1; }
+        .modal-box::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        .modal-box::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
         .modal.active .modal-box { transform: scale(1); }
+        
         .close-modal {
-            position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;
+            position: sticky; /* Sticky per rimanere visibile mentre scorri */
+            top: 20px; left: calc(100% - 60px); 
+            float: right; margin-right: 20px; margin-top: 20px;
+            width: 40px; height: 40px;
             background: white; border-radius: 50%; border: none; cursor: pointer; font-size: 24px;
-            z-index: 10; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center;
+            z-index: 100; box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+            display: flex; align-items: center; justify-content: center;
         }
-        .m-header { height: 350px; }
+        
+        .m-header { height: 350px; position: relative;}
         .m-header img { width: 100%; height: 100%; object-fit: cover; }
         .m-body { padding: 40px 50px; }
         .m-specs {
@@ -183,10 +234,34 @@
         .m-specs strong { display: block; color: var(--blue); margin-bottom: 4px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;}
         .m-specs span { color: #333; font-weight: 600; }
 
-        /* Responsive */
+        /* --- RESPONSIVE & MOBILE MENU CORRETTO --- */
         @media(max-width: 900px) {
-            .nav-links { display: none; }
-            .hamburger { display: block; }
+            .hamburger { display: block; z-index: 1001; }
+            
+            /* Menu Mobile che scende dall'alto */
+            .nav-links { 
+                position: absolute; top: 100%; left: 0; width: 100%;
+                background: white;
+                flex-direction: column; 
+                padding: 20px 0;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                /* Animazione comparsa */
+                opacity: 0; visibility: hidden; transform: translateY(-20px);
+                transition: all 0.3s ease;
+            }
+            
+            /* Quando attivo */
+            .nav-links.active {
+                opacity: 1; visibility: visible; transform: translateY(0);
+            }
+
+            .nav-links a {
+                color: var(--text); /* Nel menu mobile i link sono scuri */
+                margin: 15px 0;
+                display: block;
+                text-shadow: none;
+            }
+
             .hero h1 { font-size: 3.5rem; }
             .stats-grid { grid-template-columns: 1fr 1fr; }
             .division-block, .division-block.reversed, .footer-grid { grid-template-columns: 1fr; }
@@ -198,6 +273,7 @@
 
     <nav>
         <a href="#" class="logo-container">
+            <!-- Assicurati che logo.png sia un'immagine con sfondo trasparente -->
             <img src="./assets/img/logo.png" alt="Tecnitalia Group" class="logo-img">
         </a>
         <div class="nav-links">
@@ -211,7 +287,7 @@
     </nav>
 
     <header class="hero">
-        <!-- QUI HO INSERITO SCAVO.JPG COME RICHIESTO -->
+        <!-- IMMAGINE DI SFONDO -->
         <div class="hero-bg" id="hero-bg" style="background-image: url('./assets/img/scavo.jpg');"></div>
         <div class="hero-overlay"></div>
         <div class="hero-text" id="hero-content">
@@ -249,7 +325,6 @@
                 <p>Supportiamo venditori o acquirenti nella valutazione delle passività ambientali e progettiamo interventi completi.</p>
             </div>
             <div class="div-img-wrapper reveal-img">
-                <!-- Immagine generica ingegneria (Unsplash) - Puoi cambiarla se hai una foto specifica -->
                 <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop" class="div-img parallax-img" alt="Ingegneria">
             </div>
         </div>
@@ -268,7 +343,6 @@
                 </ul>
             </div>
             <div class="div-img-wrapper reveal-img">
-                 <!-- Immagine generica servizi (Unsplash) -->
                 <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop" class="div-img parallax-img" alt="Servizi">
             </div>
         </div>
@@ -420,18 +494,53 @@
         // INTEGRAZIONE GSAP
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Hero Animation
+        // --- GESTIONE NAVBAR SCROLL & MOBILE ---
+        const nav = document.querySelector('nav');
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navLinksItems = document.querySelectorAll('.nav-links a');
+
+        // 1. Cambio colore navbar allo scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // 2. Click Hamburger Mobile
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            // Cambia l'icona da ☰ a X (opzionale, ma carino)
+            if(navLinks.classList.contains('active')){
+                hamburger.innerHTML = "×";
+                hamburger.style.fontSize = "2.5rem";
+            } else {
+                hamburger.innerHTML = "☰";
+                hamburger.style.fontSize = "1.8rem";
+            }
+        });
+
+        // 3. Chiudi menu quando clicchi un link
+        navLinksItems.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.innerHTML = "☰";
+            });
+        });
+
+        // --- ANIMAZIONI HERO & SCROLL ---
         gsap.from("#hero-content", {
             y: 50, opacity: 0, duration: 1.5, ease: "power3.out", delay: 0.5
         });
         
-        // 2. Parallasse Sfondo Hero
         gsap.to("#hero-bg", {
             scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
             y: "30%", ease: "none"
         });
 
-        // 3. Fade In Elementi mentre scorri
         const fadeElements = document.querySelectorAll('.fade-element');
         fadeElements.forEach(el => {
             gsap.fromTo(el, 
@@ -443,7 +552,6 @@
             );
         });
 
-        // 4. Parallasse Immagini Divisioni
         const parallaxImgs = document.querySelectorAll('.parallax-img');
         parallaxImgs.forEach(img => {
             gsap.to(img, {
@@ -452,7 +560,6 @@
             });
         });
 
-        // 5. Contatori
         const counters = document.querySelectorAll('.counter');
         counters.forEach(counter => {
             let target = +counter.getAttribute('data-target');
@@ -464,7 +571,7 @@
             });
         });
 
-        // 6. DATI PROGETTI - ORA CON I PERCORSI IMMAGINI LOCALI
+        // --- DATI PROGETTI ---
         const projectsData = [
             {
                 title: "Ex Cartiere Binda",
@@ -511,7 +618,7 @@
             }
         ];
 
-        // 7. GESTIONE MODAL
+        // --- GESTIONE MODAL ---
         const modal = document.getElementById('projectModal');
         
         function openProject(index) {
@@ -525,12 +632,12 @@
             document.getElementById('m-desc').innerHTML = p.desc;
             
             modal.classList.add('active');
-            lenis.stop(); // Blocca scroll pagina
+            lenis.stop(); // Blocca lo scroll della pagina principale
         }
 
         function closeProject() {
             modal.classList.remove('active');
-            lenis.start(); // Sblocca scroll pagina
+            lenis.start(); // Riabilita lo scroll della pagina
         }
 
         // Chiudi cliccando fuori
