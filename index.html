@@ -18,7 +18,6 @@
         :root { --blue: #00427A; --text: #1d1d1f; --gray: #f5f5f7; }
         body, html { margin: 0; padding: 0; font-family: 'Manrope', sans-serif; overflow-x: hidden; width: 100%; }
         
-        /* Nascondiamo scrollbar nativa per estetica (Lenis gestisce lo scroll) */
         body::-webkit-scrollbar { display: none; }
         body { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -31,41 +30,39 @@
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 20px 5%; box-sizing: border-box;
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex; flex-direction: column; 
+            align-items: center; 
+            gap: 15px; 
             z-index: 1000;
             background: transparent; 
             transition: all 0.4s ease;
         }
 
-        /* Stato Scrolled (Bianco) */
         nav.scrolled {
             background: rgba(255, 255, 255, 0.98);
-            padding: 15px 5%;
+            padding: 10px 5%; gap: 5px; 
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
 
-        .logo-container { text-decoration: none; display: block; }
-        
-        .logo-img { 
-            height: 70px; /* Ingrandito come richiesto */
-            width: auto; display: block; 
-            transition: transform 0.3s;
-            /* Rimosso il filtro di inversione per mantenere i colori originali */
-        }
+        .logo-container { text-decoration: none; display: block; z-index: 1002; position: relative;}
+        .logo-img { height: 70px; width: auto; display: block; transition: height 0.3s ease; }
+        nav.scrolled .logo-img { height: 50px; }
 
-        .nav-links { display: flex; align-items: center; }
+        .nav-links { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; }
         .nav-links a {
             text-decoration: none; color: white; 
-            font-weight: 600; margin-left: 30px;
-            font-size: 0.9rem; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            font-weight: 600; margin: 0 20px; 
+            font-size: 0.95rem; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
             transition: color 0.3s;
         }
-        
         nav.scrolled .nav-links a { color: var(--text); text-shadow: none; } 
         nav.scrolled .nav-links a:hover { color: var(--blue); }
 
-        .hamburger { display: none; font-size: 1.8rem; cursor: pointer; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        nav.scrolled .hamburger { color: var(--text); text-shadow: none; }
+        .hamburger { 
+            display: none; font-size: 1.8rem; cursor: pointer; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
+            position: absolute; right: 5%; top: 35px; 
+        }
+        nav.scrolled .hamburger { color: var(--text); text-shadow: none; top: 15px; }
 
         /* --- HERO --- */
         .hero {
@@ -83,12 +80,17 @@
         .hero-text {
             position: relative; z-index: 3; color: white; text-align: center; max-width: 900px; padding: 20px;
         }
-        .hero-text p {
-            color: #ffffff;
-            font-size: 1.5rem; /* Opzionale: per renderlo un po' più grande e leggibile */
-            text-shadow: 0 5px 15px rgba(0,0,0,0.5); /* Opzionale: aiuta a staccarlo dall'immagine di sfondo */
+        .hero h1 { 
+            color: #ffffff; 
+            font-size: clamp(3rem, 6vw, 5rem); 
+            margin-bottom: 20px; 
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5); 
         }
-        .hero h1 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 20px; text-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .hero-text p {
+            color: #ffffff; 
+            font-size: 1.5rem; 
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
 
         /* --- LAYOUT SEZIONI --- */
         .section { padding: 100px 10%; }
@@ -116,11 +118,21 @@
         .div-img { width: 100%; height: 100%; object-fit: cover; }
         .div-text h3 { font-size: 2.5rem; color: var(--blue); margin-bottom: 20px; }
 
-        /* --- PROGETTI --- */
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 50px; }
+        /* --- PROGETTI (SLIDER ORIZZONTALE) --- */
+        .projects-slider-container {
+            position: relative; width: 100%; display: flex; align-items: center; margin-top: 50px;
+        }
+        .projects-grid { 
+            display: flex; gap: 30px; overflow-x: auto; scroll-snap-type: x mandatory; 
+            padding-bottom: 20px; scroll-behavior: smooth;
+            -ms-overflow-style: none; scrollbar-width: none;  
+        }
+        .projects-grid::-webkit-scrollbar { display: none; }
+
         .project-card {
             background: white; border-radius: 16px; overflow: hidden; cursor: pointer;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.3s;
+            min-width: 350px; flex: 0 0 auto; scroll-snap-align: start;
         }
         .project-card:hover { transform: translateY(-10px); }
         .p-img-box { height: 250px; position: relative; overflow: hidden; }
@@ -134,7 +146,18 @@
         }
         .p-img-box:hover .hover-reveal { opacity: 1; }
 
-        /* --- MODAL (IL FIX PER LO SCROLL) --- */
+        .slider-btn {
+            background: var(--blue); color: white; border: none; border-radius: 50%;
+            width: 50px; height: 50px; font-size: 1.5rem; cursor: pointer;
+            position: absolute; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .slider-btn:hover { background: #002d54; transform: scale(1.1); }
+        .slider-btn.prev { left: -25px; }
+        .slider-btn.next { right: -25px; }
+
+        /* --- MODAL E SLIDER FOTO INTERNO --- */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); z-index: 9999;
@@ -145,26 +168,36 @@
         .modal.active { opacity: 1; visibility: visible; }
 
         .modal-box {
-            background: white; width: 100%; max-width: 900px;
-            max-height: 90vh;
-            border-radius: 15px; 
-            position: relative;
-            display: flex; flex-direction: column;
-            overflow: hidden; 
-            transform: scale(0.95); transition: transform 0.3s;
+            background: white; width: 100%; max-width: 900px; max-height: 90vh;
+            border-radius: 15px; position: relative; display: flex; flex-direction: column;
+            overflow: hidden; transform: scale(0.95); transition: transform 0.3s;
         }
         .modal.active .modal-box { transform: scale(1); }
 
+        /* Contenitore Slider Immagini nel Modal */
         .m-header {
-            width: 100%; flex-shrink: 0; max-height: 350px; overflow: hidden; position: relative;
+            width: 100%; height: 350px; flex-shrink: 0; position: relative; overflow: hidden; background: #000;
         }
-        .m-header img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .m-slides-wrapper { width: 100%; height: 100%; position: relative; }
+        .m-slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0; transition: opacity 0.4s ease;
+        }
+        .m-slide.active { opacity: 1; z-index: 2; }
+        
+        /* Frecce interne al modal */
+        .m-img-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px 15px;
+            cursor: pointer; z-index: 10; font-size: 1.5rem; border-radius: 5px; transition: background 0.3s;
+        }
+        .m-img-btn:hover { background: rgba(0,0,0,0.8); }
+        .m-img-btn.prev { left: 15px; }
+        .m-img-btn.next { right: 15px; }
 
         .m-scroll-content {
-            padding: 40px;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch; 
-            overscroll-behavior: contain; 
+            padding: 40px; overflow-y: auto;
+            -webkit-overflow-scrolling: touch; overscroll-behavior: contain; 
         }
 
         .close-modal {
@@ -179,59 +212,45 @@
             background: #f4f4f4; padding: 25px; border-radius: 10px; margin-bottom: 30px; border: 1px solid #eee;
         }
         .m-specs strong { display: block; color: var(--blue); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
-        
+
         /* --- TEAM --- */
         .team-container { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
-        
         .member { 
-            text-align: center; 
-            width: 240px; 
-            background: #ffffff;
-            padding: 30px 20px;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            text-align: center; width: 240px; background: #ffffff; padding: 30px 20px;
+            border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.06);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
-        .member:hover { 
-            transform: translateY(-8px); 
-            box-shadow: 0 12px 35px rgba(0,0,0,0.12);
-        }
-        
-        .member img { 
-            width: 130px; 
-            height: 130px; 
-            border-radius: 50%; 
-            object-fit: cover; 
-            border: 3px solid var(--blue); 
-            margin-bottom: 15px; 
-        }
-        
+        .member:hover { transform: translateY(-8px); box-shadow: 0 12px 35px rgba(0,0,0,0.12); }
+        .member img { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 3px solid var(--blue); margin-bottom: 15px; }
         .member h4 { color: var(--blue); margin-bottom: 5px; }
         
+        /* --- FOOTER --- */
         .footer-sec { background: #111; color: #888; padding: 60px 10%; }
         .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
         .form-box input, .form-box textarea { width: 100%; padding: 12px; margin-bottom: 10px; background: #222; border: 1px solid #333; color: white; border-radius: 6px; box-sizing: border-box;}
         .submit-btn { background: var(--blue); color: white; border: none; padding: 12px 25px; border-radius: 25px; cursor: pointer; width: 100%; font-weight: bold; text-transform: uppercase;}
 
         @media(max-width: 900px) {
-            .hamburger { display: block; position: relative; z-index: 1002; }
+            .hamburger { display: block; z-index: 1003; }
             .nav-links {
-                position: absolute; top: 0; left: 0; width: 100%; height: 100vh; background: white;
+                position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: white;
                 flex-direction: column; justify-content: center; padding: 0; 
                 opacity: 0; visibility: hidden; transition: 0.3s;
+                z-index: 1001;
             }
             .nav-links.active { opacity: 1; visibility: visible; }
             .nav-links a { margin: 15px 0; color: #111; font-size: 1.2rem; text-shadow: none; }
-            
-            .nav-links.active ~ .logo-container .logo-img { filter: none; position: relative; z-index: 1002; }
             .hamburger.active-color { color: #111; }
 
             .stats-grid, .division-block, .division-block.reversed, .footer-grid, .text-cols { grid-template-columns: 1fr; }
             .div-img-wrapper { height: 300px; position: relative; top: 0; margin-top: 30px;}
             .hero h1 { font-size: 3rem; }
-            .m-header { max-height: 200px; } 
+            .m-header { height: 250px; } 
             .m-scroll-content { padding: 25px; }
+            
+            /* Adatta lo slider ai telefoni */
+            .project-card { min-width: 280px; }
+            .slider-btn { display: none; } /* Su mobile si scorre col dito */
         }
     </style>
 </head>
@@ -337,61 +356,32 @@
     <section id="progetti" class="section bg-gray">
         <div class="fade-element" style="text-align:center;">
             <h2 style="font-size:3rem; margin-bottom:10px; color:var(--blue);">Progetti in Evidenza</h2>
-            <p>Alcuni dei nostri principali interventi di bonifica e riqualificazione.</p>
+            <p>I nostri principali interventi di bonifica e riqualificazione.</p>
         </div>
 
-        <div class="projects-grid">
+        <div class="projects-slider-container fade-element">
+            <button class="slider-btn prev" onclick="scrollSlider(-1)">&#10094;</button>
             
-            <div class="project-card fade-element" onclick="openProject(0)">
-                <div class="p-img-box">
-                    <img src="./assets/img/binda.jpg" alt="Ex Cartiere Binda">
-                    <div class="hover-reveal">APRI SCHEDA</div>
-                </div>
-                <div class="p-content">
-                    <h4 style="color:var(--blue); margin-bottom:5px;">Ex Cartiere Binda</h4>
-                    <p style="margin:0; font-size:0.9rem">Bonifica e riqualificazione residenziale.</p>
-                </div>
-            </div>
-
-            <div class="project-card fade-element" onclick="openProject(1)">
-                <div class="p-img-box">
-                    <img src="./assets/img/chimiche.jpg" alt="Chimiche Baslini">
-                    <div class="hover-reveal">APRI SCHEDA</div>
-                </div>
-                <div class="p-content">
-                    <h4 style="color:var(--blue); margin-bottom:5px;">Ex Industrie Chimiche Baslini</h4>
-                    <p style="margin:0; font-size:0.9rem">Bonifica e Analisi Rischio.</p>
-                </div>
-            </div>
-
-            <div class="project-card fade-element" onclick="openProject(2)">
-                <div class="p-img-box">
-                    <img src="./assets/img/merlata.jpg" alt="Cascina Merlata">
-                    <div class="hover-reveal">APRI SCHEDA</div>
-                </div>
-                <div class="p-content">
-                    <h4 style="color:var(--blue); margin-bottom:5px;">Cascina Merlata</h4>
-                    <p style="margin:0; font-size:0.9rem">Sviluppo urbano EXPO 2015.</p>
-                </div>
-            </div>
-
+            <div class="projects-grid" id="projects-slider"></div>
+            
+            <button class="slider-btn next" onclick="scrollSlider(1)">&#10095;</button>
         </div>
     </section>
 
     <section id="team" class="section">
-        <h2 class="fade-element" style="text-align:center; margin-bottom:50px; color:var(--blue);">Il Team</h2>
+        <h2 class="fade-element" style="text-align:center; margin-bottom:50px; color:var(--blue);">Il Nostro Team</h2>
         <div class="team-container">
             <div class="member fade-element">
                 <img src="./assets/img/giorgio.jpg" alt="Giorgio Bressi">
                 <h4>Ing. Giorgio Bressi</h4>
                 <span style="color:#666; font-size:0.95rem;">Direttore Tecnico</span><br><br>
-                <a href="https://www.linkedin.com/in/giorgio-bressi-940741a4/" target="_blank" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LinkedIn ➔</a>
+                <a href="https://linkedin.com/" target="_blank" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LinkedIn ➔</a>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/stefano.jpg" alt="Stefano Micco">
                 <h4>Ing. Stefano Micco</h4>
                 <span style="color:#666; font-size:0.95rem;">Resp. Operativo</span><br><br>
-                <a href="https://it.linkedin.com/in/stefano-micco-932b15b8/" target="_blank" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LinkedIn ➔</a>
+                <a href="https://linkedin.com/" target="_blank" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LinkedIn ➔</a>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/elisabetta.jpg" alt="Elisabetta Pavesi">
@@ -401,14 +391,12 @@
             <div class="member fade-element">
                 <img src="./assets/img/matteo.jpg" alt="Matteo Bovio">
                 <h4>Ing. Matteo Bovio</h4>
-                <span style="color:#666; font-size:0.95rem;">Ing. Ambientale</span><br><br>
-                <a href="https://it.linkedin.com/in/matteo-bovio-9937ba2a0/" target="_blank" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LinkedIn ➔</a>
+                <span style="color:#666; font-size:0.95rem;">Ing. Ambientale</span>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/francesco.jpg" alt="Francesco Bressi">
                 <h4>Ing. Francesco Bressi</h4>
-                <span style="color:#666; font-size:0.95rem;">Ing. Ambientale</span><br><br>
-                <a href="https://it.linkedin.com/in/francesco-bressi-48299522b/" target="_blank" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LinkedIn ➔</a>
+                <span style="color:#666; font-size:0.95rem;">Ing. Ambientale</span>
             </div>
         </div>
     </section>
@@ -430,7 +418,7 @@
             </div>
         </div>
         <div style="text-align:center; margin-top:50px; border-top:1px solid #333; padding-top:20px;">
-            © 2024 Tecnitalia Group. Tutti i diritti riservati.
+            © 2026 Tecnitalia Group. Tutti i diritti riservati.
         </div>
     </footer>
 
@@ -439,7 +427,10 @@
             <button class="close-modal" onclick="closeProject()">×</button>
             
             <div class="m-header">
-                <img id="m-img" src="">
+                <div class="m-slides-wrapper" id="m-slides-wrapper">
+                    </div>
+                <button class="m-img-btn prev" onclick="changeModalImg(-1)" id="m-btn-prev">&#10094;</button>
+                <button class="m-img-btn next" onclick="changeModalImg(1)" id="m-btn-next">&#10095;</button>
             </div>
 
             <div class="m-scroll-content" data-lenis-prevent>
@@ -458,12 +449,11 @@
     </div>
 
     <script>
-        // 1. SCROLL LENIS
+        // 1. SCROLL LENIS E MENU NAVIGAZIONE
         const lenis = new Lenis({ smooth: true, duration: 1.2 });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // 2. NAVIGAZIONE (Effect: Transparent -> White)
         const nav = document.querySelector('nav');
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
@@ -478,7 +468,6 @@
             }
         });
 
-        // 3. MENU MOBILE
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             if(navLinks.classList.contains('active')) {
@@ -498,35 +487,10 @@
             });
         });
 
-        // 4. ANIMAZIONI GSAP
-        gsap.registerPlugin(ScrollTrigger);
+        // ====================================================================
+        // GESTIONE PROGETTI: AGGIUNGI QUI I TUOI NUOVI PROGETTI!
+        // ====================================================================
         
-        gsap.from("#hero-content", { y:50, opacity:0, duration:1.5, delay:0.5 });
-        gsap.to(".hero-bg", {
-            y: "30%", ease: "none",
-            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
-        });
-
-        const fadeElements = document.querySelectorAll('.fade-element');
-        fadeElements.forEach(el => {
-            gsap.fromTo(el, 
-                { y: 50, opacity: 0 },
-                {
-                    scrollTrigger: { trigger: el, start: "top 85%" },
-                    y: 0, opacity: 1, duration: 1, ease: "power3.out"
-                }
-            );
-        });
-
-        document.querySelectorAll('.counter').forEach(c => {
-            gsap.to(c, {
-                innerHTML: c.getAttribute('data-target'),
-                scrollTrigger: { trigger: c, start: "top 90%" },
-                duration: 2, snap: { innerHTML: 1 }
-            });
-        });
-
-        // 5. DATI PROGETTI (TESTI COMPLETI INTEGRATI)
         const projectsData = [
             {
                 title: "Ex Cartiere Binda", 
@@ -534,7 +498,12 @@
                 period: "2004 - 2007", 
                 val: "ca. 2.700.000 €", 
                 type: "Bonifica & DL",
-                img: "./assets/img/binda.jpg", 
+                cardSubtitle: "Bonifica e riqualificazione residenziale.",
+                // Puoi inserire quante foto vuoi separate da virgola (la prima è la copertina)
+                images: [
+                    "./assets/img/binda.jpg", 
+                    "https://images.unsplash.com/photo-1503387762-592deb58ef4e" // Foto di prova 2
+                ], 
                 desc: `
                 <p>Il sito era totalmente dismesso e presentava contaminazioni da PCB, metalli e idrocarburi. L’area ha cambiato destinazione ed è stata trasformata in un cantiere residenziale.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -542,7 +511,7 @@
                     <li>Redazione del piano di caratterizzazione.</li>
                     <li>Realizzazione dell’indagine Ambientale.</li>
                     <li>Redazione del progetto definitivo di bonifica.</li>
-                    <li>Direzione lavori interventi di bonifica, rimozione MCA (materiale contenente amianto) e demolizione.</li>
+                    <li>Direzione lavori interventi di bonifica, rimozione MCA e demolizione.</li>
                 </ul>`
             },
             {
@@ -551,7 +520,8 @@
                 period: "2008 - 2013", 
                 val: "ca. 20.000.000 €", 
                 type: "Progetto Operativo & DL",
-                img: "./assets/img/chimiche.jpg", 
+                cardSubtitle: "Bonifica e Analisi Rischio.",
+                images: ["./assets/img/chimiche.jpg"], // Se c'è solo una foto, non compaiono le frecce!
                 desc: `
                 <p>Il sito è totalmente dismesso e presenta contaminazioni da metalli, idrocarburi, solventi e pesticidi.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
@@ -559,7 +529,7 @@
                     <li>Redazione del progetto operativo di bonifica.</li>
                     <li>Direzione lavori.</li>
                     <li>Redazione della Variante del progetto Operativo di Bonifica con Analisi del rischio.</li>
-                    <li>Implementazione di un modello matematico per la rimodulazione dello sbarramento idraulico.</li>
+                    <li>Implementazione di un modello matematico.</li>
                 </ul>`
             },
             {
@@ -568,23 +538,85 @@
                 period: "2012 - 2013", 
                 val: "ca. 2.000.000 €", 
                 type: "Progetto Operativo",
-                img: "./assets/img/merlata.jpg", 
+                cardSubtitle: "Sviluppo urbano EXPO 2015.",
+                images: ["./assets/img/merlata.jpg", "https://images.unsplash.com/photo-1581094794329-c8112a89af12"], 
                 desc: `
-                <p>Il sito era totalmente dismesso e presentava contaminazioni da idrocarburi e metalli. L’area verrà trasformata in un sistema di variabilità e urbanizzazioni necessarie per il collegamento tra il quartiere Cascina Merlata e la zona EXPO2015.</p>
+                <p>Il sito era totalmente dismesso e presentava contaminazioni da idrocarburi e metalli. L’area verrà trasformata in un sistema di viabilità e urbanizzazioni per l'EXPO2015.</p>
                 <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
                 <ul>
                     <li>Redazione del progetto operativo di bonifica.</li>
                     <li>Direzione lavori.</li>
                 </ul>`
             }
+            
+            // ---> VUOI AGGIUNGERE UN PROGETTO? COPIA E INCOLLA UN BLOCCO COME QUESTO QUI SOTTO:
+            /*
+            ,{
+                title: "Nome Nuovo Progetto", 
+                client: "Nome Cliente", 
+                period: "2020 - 2021", 
+                val: "1.000.000 €", 
+                type: "Tipo Lavoro",
+                cardSubtitle: "Breve frase per la card.",
+                images: ["./assets/img/foto1.jpg", "./assets/img/foto2.jpg"], 
+                desc: `<p>Descrizione lunga del progetto...</p>`
+            }
+            */
         ];
 
-        // 6. GESTIONE MODAL E FIX PER LO SCROLL
+        // ====================================================================
+
+        // Generazione Automatica delle Card nello Slider
+        const sliderContainer = document.getElementById('projects-slider');
+        projectsData.forEach((p, index) => {
+            const cardHTML = `
+                <div class="project-card" onclick="openProject(${index})">
+                    <div class="p-img-box">
+                        <img src="${p.images[0]}" alt="${p.title}">
+                        <div class="hover-reveal">APRI SCHEDA</div>
+                    </div>
+                    <div class="p-content">
+                        <h4 style="color:var(--blue); margin-bottom:5px;">${p.title}</h4>
+                        <p style="margin:0; font-size:0.9rem">${p.cardSubtitle}</p>
+                    </div>
+                </div>
+            `;
+            sliderContainer.innerHTML += cardHTML;
+        });
+
+        // ANIMAZIONI GSAP (Inizializzate dopo la generazione delle card)
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.from("#hero-content", { y:50, opacity:0, duration:1.5, delay:0.5 });
+        gsap.to(".hero-bg", {
+            y: "30%", ease: "none",
+            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+        });
+
+        document.querySelectorAll('.fade-element').forEach(el => {
+            gsap.fromTo(el, { y: 50, opacity: 0 }, { scrollTrigger: { trigger: el, start: "top 85%" }, y: 0, opacity: 1, duration: 1, ease: "power3.out" });
+        });
+
+        document.querySelectorAll('.counter').forEach(c => {
+            gsap.to(c, { innerHTML: c.getAttribute('data-target'), scrollTrigger: { trigger: c, start: "top 90%" }, duration: 2, snap: { innerHTML: 1 } });
+        });
+
+        // SCORRIMENTO SLIDER ESTERNO
+        function scrollSlider(direction) {
+            const scrollAmount = 380; // Larghezza card + gap
+            document.getElementById('projects-slider').scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+        }
+
+        // GESTIONE MODAL E FOTO INTERNE
         const modal = document.getElementById('projectModal');
-        
+        let currentProjectIndex = 0;
+        let currentImageIndex = 0;
+
         function openProject(index) {
+            currentProjectIndex = index;
+            currentImageIndex = 0;
             const p = projectsData[index];
-            document.getElementById('m-img').src = p.img;
+            
+            // Popola i testi
             document.getElementById('m-title').innerHTML = p.title;
             document.getElementById('m-client').innerHTML = p.client;
             document.getElementById('m-period').innerHTML = p.period;
@@ -592,19 +624,48 @@
             document.getElementById('m-type').innerHTML = p.type;
             document.getElementById('m-desc').innerHTML = p.desc;
             
+            // Popola le foto
+            const wrapper = document.getElementById('m-slides-wrapper');
+            wrapper.innerHTML = ''; // Pulisce foto precedenti
+            p.images.forEach((imgSrc, i) => {
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.className = 'm-slide' + (i === 0 ? ' active' : '');
+                wrapper.appendChild(img);
+            });
+
+            // Mostra o nascondi le frecce se c'è solo una foto
+            const showArrows = p.images.length > 1 ? 'block' : 'none';
+            document.getElementById('m-btn-prev').style.display = showArrows;
+            document.getElementById('m-btn-next').style.display = showArrows;
+
             modal.classList.add('active');
+            lenis.stop(); // Ferma lo scroll di sfondo
+        }
+
+        // Funzione per scorrere le foto dentro al modal
+        function changeModalImg(direction) {
+            const p = projectsData[currentProjectIndex];
+            const slides = document.querySelectorAll('.m-slide');
             
-            // FIX: Mettiamo in pausa Lenis in background per permettere lo scroll nativo del popup
-            lenis.stop(); 
+            // Rimuovi classe attiva dalla foto corrente
+            slides[currentImageIndex].classList.remove('active');
+            
+            // Calcola la nuova foto
+            currentImageIndex += direction;
+            if (currentImageIndex < 0) currentImageIndex = p.images.length - 1;
+            if (currentImageIndex >= p.images.length) currentImageIndex = 0;
+            
+            // Aggiungi classe attiva alla nuova foto
+            slides[currentImageIndex].classList.add('active');
         }
 
         function closeProject() {
             modal.classList.remove('active');
-            
-            // FIX: Facciamo ripartire Lenis in background
-            lenis.start(); 
+            lenis.start(); // Riattiva lo scroll di sfondo
         }
 
+        // Chiude il modal cliccando fuori dal riquadro bianco
         modal.addEventListener('click', (e) => {
             if(e.target === modal) closeProject();
         });
