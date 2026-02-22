@@ -179,24 +179,35 @@
             background: #f4f4f4; padding: 25px; border-radius: 10px; margin-bottom: 30px; border: 1px solid #eee;
         }
         .m-specs strong { display: block; color: var(--blue); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
-
-        /* --- TEAM & FOOTER --- */
+        
+        /* --- TEAM --- */
         .team-container { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
         
-        /* I box del team resi più evidenti (rettangoli con ombra e sfondo) */
         .member { 
-            text-align: center; width: 240px; 
+            text-align: center; 
+            width: 240px; 
             background: #ffffff;
             padding: 30px 20px;
             border-radius: 16px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.06);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+        
         .member:hover { 
             transform: translateY(-8px); 
             box-shadow: 0 12px 35px rgba(0,0,0,0.12);
         }
-        .member img { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 3px solid var(--blue); margin-bottom: 15px; }
+        
+        .member img { 
+            width: 130px; 
+            height: 130px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 3px solid var(--blue); 
+            margin-bottom: 15px; 
+        }
+        
+        .member h4 { color: var(--blue); margin-bottom: 5px; }
         
         .footer-sec { background: #111; color: #888; padding: 60px 10%; }
         .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
@@ -368,33 +379,33 @@
     </section>
 
     <section id="team" class="section">
-        <h2 class="fade-element" style="text-align:center; margin-bottom:50px; color:var(--blue);">Il Nostro Team</h2>
+        <h2 class="fade-element" style="text-align:center; margin-bottom:50px; color:var(--blue);">Il Team</h2>
         <div class="team-container">
             <div class="member fade-element">
                 <img src="./assets/img/giorgio.jpg" alt="Giorgio Bressi">
-                <h4 style="color:var(--blue);">Ing. Giorgio Bressi</h4>
+                <h4>Ing. Giorgio Bressi</h4>
                 <span style="color:#666; font-size:0.95rem;">Direttore Tecnico</span><br><br>
-                <a href="#" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LINKEDIN ➔</a>
+                <a href="#" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LinkedIn ➔</a>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/stefano.jpg" alt="Stefano Micco">
-                <h4 style="color:var(--blue);">Ing. Stefano Micco</h4>
+                <h4>Ing. Stefano Micco</h4>
                 <span style="color:#666; font-size:0.95rem;">Resp. Operativo</span><br><br>
-                <a href="#" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LINKEDIN ➔</a>
+                <a href="#" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LinkedIn ➔</a>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/elisabetta.jpg" alt="Elisabetta Pavesi">
-                <h4 style="color:var(--blue);">Arch. Elisabetta Pavesi</h4>
+                <h4>Arch. Elisabetta Pavesi</h4>
                 <span style="color:#666; font-size:0.95rem;">Architetto</span>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/matteo.jpg" alt="Matteo Bovio">
-                <h4 style="color:var(--blue);">Ing. Matteo Bovio</h4>
+                <h4>Ing. Matteo Bovio</h4>
                 <span style="color:#666; font-size:0.95rem;">Ing. Ambientale</span>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/francesco.jpg" alt="Francesco Bressi">
-                <h4 style="color:var(--blue);">Ing. Francesco Bressi</h4>
+                <h4>Ing. Francesco Bressi</h4>
                 <span style="color:#666; font-size:0.95rem;">Ing. Ambientale</span>
             </div>
         </div>
