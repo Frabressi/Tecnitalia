@@ -4,100 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tecnitalia Group | Ingegneria e Servizi Ambientali</title>
-    <meta name="description" content="Tecnitalia Group: Leader dal 1986 in Ingegneria Ambientale, Bonifiche, Sicurezza e Analisi di Rischio Industriale.">
     
-    <!-- 1. LIBRERIE GSAP + LENIS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 
-    <!-- FONT -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
 
     <style>
         /* --- CSS BASE --- */
-        :root {
-            --blue: #00427A;
-            --dark: #111111;
-            --gray: #f5f5f7;
-            --text: #1d1d1f;
-            --text-light: #555;
-        }
-
-        body, html {
-            margin: 0; padding: 0;
-            font-family: 'Manrope', sans-serif;
-            background-color: #fff;
-            color: var(--text);
-            overflow-x: hidden;
-            width: 100%;
-        }
-
-        /* Nascondiamo scrollbar nativa body */
+        :root { --blue: #00427A; --text: #1d1d1f; --gray: #f5f5f7; }
+        body, html { margin: 0; padding: 0; font-family: 'Manrope', sans-serif; overflow-x: hidden; width: 100%; }
+        
+        /* Nascondiamo scrollbar nativa per estetica (Lenis gestisce lo scroll) */
         body::-webkit-scrollbar { display: none; }
         body { -ms-overflow-style: none; scrollbar-width: none; }
 
         h1, h2, h3, h4 { margin: 0; font-weight: 800; letter-spacing: -0.02em; }
-        p, li { line-height: 1.6; color: var(--text-light); font-size: 1.1rem; margin-bottom: 20px; }
-        ul { padding-left: 20px; margin-bottom: 20px;}
-        
-        /* --- NAVIGAZIONE & LOGO FIX --- */
+        p, li { line-height: 1.7; color: #444; font-size: 1.05rem; margin-bottom: 15px; }
+        ul { padding-left: 20px; margin-bottom: 20px; }
+        li { margin-bottom: 8px; }
+
+        /* --- NAVIGAZIONE --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
-            padding: 25px 5%; box-sizing: border-box;
+            padding: 20px 5%; box-sizing: border-box;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; 
-            background: transparent; /* Trasparente all'inizio */
+            z-index: 1000;
+            background: transparent; 
             transition: all 0.4s ease;
         }
 
+        /* Stato Scrolled (Bianco) */
         nav.scrolled {
-            background: rgba(255, 255, 255, 0.98); /* Bianco pieno allo scroll */
+            background: rgba(255, 255, 255, 0.98);
             padding: 15px 5%;
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
 
-        .logo-container {
-            text-decoration: none;
-            background: transparent !important; /* Forza trasparenza */
-            display: block;
-        }
-
-        .logo-img { 
-            height: 40px; 
-            width: auto; 
-            display: block;
-            transition: filter 0.3s;
-            /* TRUCCO VISIBILITÀ LOGO:
-               Se il logo è nero e lo sfondo è scuro, non si vede.
-               Invertiamo i colori per farlo diventare BIANCO quando la nav è trasparente.
-            */
-            filter: brightness(0) invert(1); 
-        }
-
-        /* Quando scorri e lo sfondo diventa bianco, il logo torna al colore originale (NERO/BLU) */
-        nav.scrolled .logo-img {
-            filter: none;
-        }
+        .logo-container { text-decoration: none; display: block; }
         
+        .logo-img { 
+            height: 70px; /* Ingrandito come richiesto */
+            width: auto; display: block; 
+            transition: transform 0.3s;
+            /* Rimosso il filtro di inversione per mantenere i colori originali */
+        }
+
         .nav-links { display: flex; align-items: center; }
         .nav-links a {
-            text-decoration: none; color: white; /* Testo bianco su Hero */
+            text-decoration: none; color: white; 
             font-weight: 600; margin-left: 30px;
-            font-size: 0.9rem; transition: color 0.3s; text-transform: uppercase;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            font-size: 0.9rem; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            transition: color 0.3s;
         }
         
-        nav.scrolled .nav-links a {
-            color: var(--text); /* Testo scuro su sfondo bianco */
-            text-shadow: none;
-        }
+        nav.scrolled .nav-links a { color: var(--text); text-shadow: none; } 
         nav.scrolled .nav-links a:hover { color: var(--blue); }
 
-        .hamburger { display: none; font-size: 1.8rem; cursor: pointer; color: white; }
-        nav.scrolled .hamburger { color: var(--text); }
+        .hamburger { display: none; font-size: 1.8rem; cursor: pointer; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        nav.scrolled .hamburger { color: var(--text); text-shadow: none; }
 
         /* --- HERO --- */
         .hero {
@@ -106,8 +74,7 @@
         }
         .hero-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 120%;
-            background-size: cover; background-position: center;
-            z-index: 1; will-change: transform;
+            background-size: cover; background-position: center; z-index: 1;
         }
         .hero-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -116,164 +83,139 @@
         .hero-text {
             position: relative; z-index: 3; color: white; text-align: center; max-width: 900px; padding: 20px;
         }
-        .hero h1 { font-size: clamp(3rem, 6vw, 5rem); line-height: 1.1; margin-bottom: 20px; text-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .hero p { color: rgba(255,255,255,0.9); font-size: 1.5rem; text-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .hero h1 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 20px; text-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 
-        /* --- LAYOUT GENERALE --- */
-        .section { padding: 120px 10%; position: relative; }
+        /* --- LAYOUT SEZIONI --- */
+        .section { padding: 100px 10%; }
         .bg-gray { background-color: var(--gray); }
-        
+
+        /* Chi Siamo espanso */
+        .text-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 40px; }
+        .text-full { max-width: 900px; margin: 0 auto; }
+
         .stats-grid {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 60px;
             border-top: 1px solid #ddd; padding-top: 40px;
         }
         .stat-num { font-size: 3.5rem; color: var(--blue); font-weight: 800; display: block; }
-        .stat-label { font-size: 0.9rem; text-transform: uppercase; font-weight: 600; color: var(--text); }
-
-        .division-block { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        
+        /* Division Blocks (Img + Text) */
+        .division-block { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
         .division-block.reversed { direction: rtl; } 
         .division-block.reversed .div-text { direction: ltr; }
-        .div-img-wrapper {
-            width: 100%; height: 500px; overflow: hidden; border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1); position: relative;
+        
+        .div-img-wrapper { 
+            width: 100%; height: 600px; 
+            border-radius: 20px; overflow: hidden; position: sticky; top: 120px;
         }
-        .div-img { width: 100%; height: 140%; object-fit: cover; position: absolute; top: -20%; }
-        .div-text h3 { font-size: 3rem; color: var(--blue); margin-bottom: 20px; }
+        .div-img { width: 100%; height: 100%; object-fit: cover; }
+        .div-text h3 { font-size: 2.5rem; color: var(--blue); margin-bottom: 20px; }
 
         /* --- PROGETTI --- */
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; margin-top: 60px; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 50px; }
         .project-card {
             background: white; border-radius: 16px; overflow: hidden; cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.4s ease;
-            position: relative; border: 1px solid #eee;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.3s;
         }
         .project-card:hover { transform: translateY(-10px); }
-        .p-img-box { height: 280px; overflow: hidden; position: relative; }
-        .p-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+        .p-img-box { height: 250px; position: relative; overflow: hidden; }
+        .p-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
         .project-card:hover .p-img-box img { transform: scale(1.1); }
-        .p-content { padding: 30px; }
-        .p-title { font-size: 1.5rem; color: var(--blue); margin-bottom: 10px; }
-        
+        .p-content { padding: 25px; }
         .hover-reveal {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 66, 122, 0.9); display: flex; align-items: center; justify-content: center;
-            color: white; font-weight: 700; opacity: 0; transition: opacity 0.3s;
-            text-transform: uppercase; letter-spacing: 1px;
+            background: rgba(0,66,122,0.9); opacity: 0; display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 700; transition: opacity 0.3s;
         }
         .p-img-box:hover .hover-reveal { opacity: 1; }
 
-        /* --- TEAM --- */
-        .team-container { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; margin-top: 50px;}
-        .member { text-align: center; width: 250px; background: white; padding: 30px 20px; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.03);}
-        .member img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid var(--blue);}
-        .member h4 { font-size: 1.2rem; margin-bottom: 5px; color: var(--text); }
-        .member span { color: var(--blue); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; }
-        .lnk-btn { display: inline-block; margin-top: 15px; font-size: 0.8rem; color: #0077b5; text-decoration: none; border: 1px solid #0077b5; padding: 5px 20px; border-radius: 20px; transition:0.3s;}
-        .lnk-btn:hover { background: #0077b5; color: white; }
-
-        /* --- FOOTER --- */
-        .footer-sec { background: #0b0c10; color: #888; padding: 80px 10%; }
-        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
-        .form-box input, .form-box textarea {
-            width: 100%; padding: 15px; margin-bottom: 15px; background: #1f1f1f; border: 1px solid #333;
-            color: white; border-radius: 8px; font-family: inherit; box-sizing: border-box;
-        }
-        .submit-btn {
-            background: var(--blue); color: white; border: none; padding: 15px 30px;
-            font-weight: 700; border-radius: 30px; cursor: pointer; text-transform: uppercase; width: 100%;
-        }
-
-        /* --- MODAL FIX DEFINITIVO --- */
+        /* --- MODAL (IL FIX PER LO SCROLL) --- */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
-            z-index: 9999; opacity: 0; visibility: hidden; transition: opacity 0.3s;
+            background: rgba(0,0,0,0.9); z-index: 9999;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s;
             display: flex; align-items: center; justify-content: center;
+            padding: 20px; box-sizing: border-box;
         }
         .modal.active { opacity: 1; visibility: visible; }
-        
+
         .modal-box {
-            background: white; 
-            width: 90%; max-width: 900px; 
-            max-height: 90vh; /* Non supera il 90% dell'altezza schermo */
-            overflow-y: auto; /* SCROLL ABILITATO SUL CONTENUTO */
-            border-radius: 20px; position: relative;
-            transform: scale(0.9); transition: transform 0.3s;
+            background: white; width: 100%; max-width: 900px;
+            max-height: 90vh;
+            border-radius: 15px; 
+            position: relative;
             display: flex; flex-direction: column;
-            
-            /* Scroll fluido su mobile */
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
+            overflow: hidden; 
+            transform: scale(0.95); transition: transform 0.3s;
         }
         .modal.active .modal-box { transform: scale(1); }
 
-        .close-modal {
-            position: absolute; top: 15px; right: 15px; 
-            width: 40px; height: 40px;
-            background: white; border-radius: 50%; border: none; cursor: pointer; font-size: 24px;
-            z-index: 20; /* Sopra a tutto */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
-            display: flex; align-items: center; justify-content: center;
-        }
-        
-        /* FIX IMMAGINE CHE SBORDA */
         .m-header {
-            width: 100%;
-            position: relative;
-            /* Rimosso height fissa per evitare sovrapposizioni */
+            width: 100%; flex-shrink: 0; max-height: 350px; overflow: hidden; position: relative;
         }
-        .m-header img { 
-            width: 100%; 
-            height: auto; 
-            max-height: 50vh; /* Limita l'altezza immagine a metà schermo */
-            object-fit: cover; 
-            display: block; /* Toglie spazi bianchi sotto le immagini */
-            border-radius: 20px 20px 0 0;
-        }
-        
-        .m-body { padding: 40px 50px; background: white; }
-        
-        .m-specs {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
-            background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 1px solid #eee;
-        }
-        .m-specs strong { display: block; color: var(--blue); margin-bottom: 4px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;}
-        .m-specs span { color: #333; font-weight: 600; }
+        .m-header img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        /* --- MOBILE MENU --- */
+        .m-scroll-content {
+            padding: 40px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch; 
+            overscroll-behavior: contain; 
+        }
+
+        .close-modal {
+            position: absolute; top: 15px; right: 15px;
+            width: 40px; height: 40px; background: white; border-radius: 50%;
+            border: none; cursor: pointer; font-size: 24px; z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;
+        }
+
+        .m-specs {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;
+            background: #f4f4f4; padding: 25px; border-radius: 10px; margin-bottom: 30px; border: 1px solid #eee;
+        }
+        .m-specs strong { display: block; color: var(--blue); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
+
+        /* --- TEAM & FOOTER --- */
+        .team-container { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
+        
+        /* I box del team resi più evidenti (rettangoli con ombra e sfondo) */
+        .member { 
+            text-align: center; width: 240px; 
+            background: #ffffff;
+            padding: 30px 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .member:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+        }
+        .member img { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 3px solid var(--blue); margin-bottom: 15px; }
+        
+        .footer-sec { background: #111; color: #888; padding: 60px 10%; }
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .form-box input, .form-box textarea { width: 100%; padding: 12px; margin-bottom: 10px; background: #222; border: 1px solid #333; color: white; border-radius: 6px; box-sizing: border-box;}
+        .submit-btn { background: var(--blue); color: white; border: none; padding: 12px 25px; border-radius: 25px; cursor: pointer; width: 100%; font-weight: bold; text-transform: uppercase;}
+
         @media(max-width: 900px) {
-            .hamburger { display: block; position:relative; z-index: 1002; }
-            
-            .nav-links { 
-                position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
-                background: white;
-                flex-direction: column; justify-content: center;
-                opacity: 0; visibility: hidden; 
-                transition: all 0.3s ease;
-                padding-top: 60px; /* Spazio per la barra in alto */
+            .hamburger { display: block; position: relative; z-index: 1002; }
+            .nav-links {
+                position: absolute; top: 0; left: 0; width: 100%; height: 100vh; background: white;
+                flex-direction: column; justify-content: center; padding: 0; 
+                opacity: 0; visibility: hidden; transition: 0.3s;
             }
             .nav-links.active { opacity: 1; visibility: visible; }
+            .nav-links a { margin: 15px 0; color: #111; font-size: 1.2rem; text-shadow: none; }
             
-            .nav-links a {
-                color: var(--dark); font-size: 1.5rem; margin: 20px 0;
-                text-shadow: none;
-            }
+            .nav-links.active ~ .logo-container .logo-img { filter: none; position: relative; z-index: 1002; }
+            .hamburger.active-color { color: #111; }
 
-            .hero h1 { font-size: 3.5rem; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-            .division-block, .division-block.reversed, .footer-grid { grid-template-columns: 1fr; }
-            .m-body { padding: 30px 20px; }
-            
-            /* Logo mobile fix */
-            .logo-img { filter: none; } /* Su mobile, se il menu apre bianco, il logo deve vedersi */
-            nav.scrolled .logo-img { filter: none; }
-            
-            /* Se la nav non è scrolled, su mobile il logo deve essere bianco? 
-               Dipende dallo sfondo. Lasciamo il filtro dinamico anche qui per coerenza */
-             .logo-img { filter: brightness(0) invert(1); }
-             nav.scrolled .logo-img { filter: none; }
-             /* Quando il menu è aperto (sfondo bianco), logo nero */
-             nav .nav-links.active ~ .logo-container .logo-img { filter: none; z-index: 1002; position: relative; }
+            .stats-grid, .division-block, .division-block.reversed, .footer-grid, .text-cols { grid-template-columns: 1fr; }
+            .div-img-wrapper { height: 300px; position: relative; top: 0; margin-top: 30px;}
+            .hero h1 { font-size: 3rem; }
+            .m-header { max-height: 200px; } 
+            .m-scroll-content { padding: 25px; }
         }
     </style>
 </head>
@@ -294,7 +236,7 @@
     </nav>
 
     <header class="hero">
-        <div class="hero-bg" id="hero-bg" style="background-image: url('./assets/img/scavo.jpg');"></div>
+        <div class="hero-bg" style="background-image: url('./assets/img/scavo.jpg');"></div>
         <div class="hero-overlay"></div>
         <div class="hero-text" id="hero-content">
             <h1>Tecnitalia Group</h1>
@@ -305,15 +247,23 @@
     <section id="chi-siamo" class="section">
         <div class="fade-element">
             <h2 style="font-size:3rem; color:var(--blue); margin-bottom:30px;">Chi Siamo</h2>
-            <p>Il Gruppo Tecnitalia è nato per prestare consulenza tecnica e servizi alle imprese. Si è sviluppato progressivamente dal 1986 dedicandosi a numerosi settori di interesse strategico.</p>
-            <p>I primi settori sono stati la sicurezza (Direttiva Seveso) e l'analisi del rischio. Successivamente è stato avviato il settore ambientale: recupero aree industriali dismesse, bonifica terreni e acque di falda.</p>
+            <div class="text-cols">
+                <div>
+                    <p>Il Gruppo Tecnitalia è nato per prestare consulenza tecnica e servizi alle imprese. Si è sviluppato progressivamente dal 1986 dedicandosi a numerosi settori di interesse. I primi sono stati la sicurezza, con particolare riferimento all’antincendio e all’analisi del rischio per le attività soggette al DPR 175/88 (Direttiva Seveso) e il servizio di consulenza tecnica fornito alle Compagnie di Assicurazione.</p>
+                    <p>Successivamente è stato avviato anche il settore ambientale che, facendo seguito al recepimento nazionale delle Direttive Comunitarie in materia ed ai connessi obblighi per le imprese, si è concentrato sulle problematiche di recupero delle aree industriali dismesse con particolare riferimento alla bonifica dei terreni contaminati, delle acque di falda e reflue e alla gestione dei rifiuti.</p>
+                </div>
+                <div>
+                    <p>Anche nel settore sicurezza la gamma dei servizi offerti alle imprese si è progressivamente sviluppata inserendo la valutazione dei rischi derivante dagli impianti, dalle attività lavorative e dalle macchine.</p>
+                    <p>Di recente sono state consolidate anche le competenze per far fronte alla domanda di certificazione delle imprese (ISO 9000, ISO 14000, EMAS) e dei prodotti (marcatura CE degli aggregati) con specifico riferimento al settore del riciclaggio dei rifiuti.</p>
+                </div>
+            </div>
         </div>
-        
+
         <div class="stats-grid fade-element">
-            <div><span class="stat-num counter" data-target="20">0</span><span class="stat-label">Anni di esperienza</span></div>
-            <div><span class="stat-num counter" data-target="86">0</span><span class="stat-label">Progetti di Bonifica</span></div>
-            <div><span class="stat-num counter" data-target="278">0</span><span class="stat-label">Collaborazioni</span></div>
-            <div><span class="stat-num counter" data-target="788">0</span><span class="stat-label">Tonnellate Smaltite</span></div>
+            <div><span class="stat-num counter" data-target="30">0</span><span class="stat-label">Anni d'esperienza</span></div>
+            <div><span class="stat-num counter" data-target="86">0</span><span class="stat-label">Progetti</span></div>
+            <div><span class="stat-num counter" data-target="278">0</span><span class="stat-label">Clienti</span></div>
+            <div><span class="stat-num counter" data-target="788">0</span><span class="stat-label">Tonnellate Gestite</span></div>
         </div>
     </section>
 
@@ -321,17 +271,30 @@
         <div class="division-block">
             <div class="div-text fade-element">
                 <h3>Tecnitalia Ingegneria</h3>
-                <p>Ha sviluppato competenze uniche grazie ad un'intensa attività di studio. I settori di interesse sono l'ambiente e la sicurezza industriale.</p>
+                <p>Grazie all'ormai trentennale esperienza, supportata da studio e ricerca costanti, offriamo un servizio completo. Dalla fine degli anni '90 ci siamo specializzati nel recupero delle aree dismesse e nelle bonifiche.</p>
+                
+                <p><strong>Tematiche Ambientali (Cosa facciamo):</strong></p>
                 <ul>
-                    <li>Trattamenti delle acque e rifiuti.</li>
-                    <li>Gestione emissioni gassose.</li>
-                    <li>Recupero aree dismesse.</li>
-                    <li>Analisi rischio e Direttiva Seveso.</li>
+                    <li>Trattamenti di acque di approvvigionamento, rifiuto e reflui particolari (percolato, acque di vegetazione, etc.).</li>
+                    <li>Trattamenti delle emissioni gassose.</li>
+                    <li>Gestione di rifiuti speciali (pericolosi e non), urbani (raccolta, separazione, recupero, smaltimento) e flussi particolari (demolizioni, pneumatici, oli esausti).</li>
+                    <li>Recupero delle aree dismesse e bonifica di siti contaminati.</li>
+                    <li>Supporto nella compravendita di siti industriali per la valutazione delle passività ambientali.</li>
                 </ul>
-                <p>Supportiamo venditori o acquirenti nella valutazione delle passività ambientali e progettiamo interventi completi.</p>
+
+                <p><strong>Sicurezza Industriale (Attivi dagli anni '80):</strong></p>
+                <ul>
+                    <li>Analisi del rischio per attività a rischio d'incidente rilevante (Direttiva Seveso).</li>
+                    <li>Valutazione dei rischi derivanti da impianti, macchine e attività lavorative.</li>
+                    <li>Redazione Documenti di Valutazione dei Rischi (DVR) e Piani di Emergenza.</li>
+                    <li>Assunzione di incarichi esterni come <strong>RSPP</strong> o <strong>Responsabile Tecnico (RT)</strong> con professionisti abilitati.</li>
+                    <li>Perizie tecniche legali (tecnici di parte e d'ufficio) in quanto iscritti all'albo dei periti del tribunale.</li>
+                    <li>Organizzazione di corsi di formazione specifici per Enti o Aziende.</li>
+                </ul>
+                <p>Affianchiamo le imprese dall'accertamento iniziale della normativa, fino all'analisi di rischio sito-specifica, progettazione degli interventi e controllo lavori.</p>
             </div>
             <div class="div-img-wrapper reveal-img">
-                <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop" class="div-img parallax-img" alt="Ingegneria">
+                <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12" class="div-img" alt="Ingegneria">
             </div>
         </div>
     </section>
@@ -340,93 +303,94 @@
         <div class="division-block reversed">
             <div class="div-text fade-element">
                 <h3>Tecnitalia Servizi</h3>
-                <p>Si occupa di tutte le fasi operative: indagini, caratterizzazione suoli e acque di falda. Identifica soluzioni ottimali a problemi specifici.</p>
+                <p>Nata agli inizi degli anni 2000, Tecnitalia Servizi opera prevalentemente nel settore ambientale per far fronte alle esigenze operative e di indagine non progettuale dei nostri clienti.</p>
+                
                 <ul>
-                    <li>Indagini geognostiche e campionamenti.</li>
-                    <li>Messa in Sicurezza d'Emergenza (MISE).</li>
-                    <li>Bonifica e smaltimento amianto.</li>
-                    <li>Gestione operativa di cantiere.</li>
+                    <li><strong>Indagini e Caratterizzazioni:</strong> Gestiamo tutte le fasi operative di analisi dei suoli e delle acque di falda, identificando le soluzioni ottimali ai problemi ambientali.</li>
+                    <li><strong>Laboratorio Accreditato:</strong> Grazie a una convenzione dedicata, determiniamo la concentrazione di contaminanti in tutte le matrici ambientali, sostenendo eventuali contraddittori con i laboratori pubblici.</li>
+                    <li><strong>Supporto Immobiliare:</strong> Affianchiamo le società immobiliari nelle attività di compravendita, stimando correttamente le passività ambientali presenti sui siti (tempi e costi di bonifica).</li>
+                    <li><strong>Gestione Materiali Pericolosi:</strong> Effettuiamo mappature per la presenza di materiali contenenti amianto (MCA), redigendo caratterizzazioni ambientali e piani di smaltimento rifiuti.</li>
                 </ul>
             </div>
             <div class="div-img-wrapper reveal-img">
-                <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop" class="div-img parallax-img" alt="Servizi">
+                <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1" class="div-img" alt="Servizi">
             </div>
         </div>
     </section>
 
     <section id="progetti" class="section bg-gray">
         <div class="fade-element" style="text-align:center;">
-            <h2 style="font-size:3rem; margin-bottom:10px; color:var(--blue);">I Nostri Progetti</h2>
-            <p>Interventi significativi di bonifica e riqualificazione.</p>
+            <h2 style="font-size:3rem; margin-bottom:10px; color:var(--blue);">Progetti in Evidenza</h2>
+            <p>Alcuni dei nostri principali interventi di bonifica e riqualificazione.</p>
         </div>
 
         <div class="projects-grid">
+            
             <div class="project-card fade-element" onclick="openProject(0)">
                 <div class="p-img-box">
                     <img src="./assets/img/binda.jpg" alt="Ex Cartiere Binda">
-                    <div class="hover-reveal">Vedi Dettagli</div>
+                    <div class="hover-reveal">APRI SCHEDA</div>
                 </div>
                 <div class="p-content">
-                    <h4 class="p-title">Ex Cartiere Binda</h4>
-                    <p style="margin:0; font-size:0.9rem;">Bonifica e riqualificazione area industriale.</p>
+                    <h4 style="color:var(--blue); margin-bottom:5px;">Ex Cartiere Binda</h4>
+                    <p style="margin:0; font-size:0.9rem">Bonifica e riqualificazione residenziale.</p>
                 </div>
             </div>
 
             <div class="project-card fade-element" onclick="openProject(1)">
                 <div class="p-img-box">
-                    <img src="./assets/img/chimiche.jpg" alt="Industrie Chimiche">
-                    <div class="hover-reveal">Vedi Dettagli</div>
+                    <img src="./assets/img/chimiche.jpg" alt="Chimiche Baslini">
+                    <div class="hover-reveal">APRI SCHEDA</div>
                 </div>
                 <div class="p-content">
-                    <h4 class="p-title">Industrie Chimiche Baslini</h4>
-                    <p style="margin:0; font-size:0.9rem;">Messa in sicurezza e analisi rischio.</p>
+                    <h4 style="color:var(--blue); margin-bottom:5px;">Ex Industrie Chimiche Baslini</h4>
+                    <p style="margin:0; font-size:0.9rem">Bonifica e Analisi Rischio.</p>
                 </div>
             </div>
 
             <div class="project-card fade-element" onclick="openProject(2)">
                 <div class="p-img-box">
                     <img src="./assets/img/merlata.jpg" alt="Cascina Merlata">
-                    <div class="hover-reveal">Vedi Dettagli</div>
+                    <div class="hover-reveal">APRI SCHEDA</div>
                 </div>
                 <div class="p-content">
-                    <h4 class="p-title">Cascina Merlata</h4>
-                    <p style="margin:0; font-size:0.9rem;">Bonifica per sviluppo urbano EXPO.</p>
+                    <h4 style="color:var(--blue); margin-bottom:5px;">Cascina Merlata</h4>
+                    <p style="margin:0; font-size:0.9rem">Sviluppo urbano EXPO 2015.</p>
                 </div>
             </div>
+
         </div>
     </section>
 
     <section id="team" class="section">
-        <h2 class="fade-element" style="text-align:center; font-size:2.5rem; margin-bottom:50px; color:var(--blue);">Il Nostro Team</h2>
+        <h2 class="fade-element" style="text-align:center; margin-bottom:50px; color:var(--blue);">Il Nostro Team</h2>
         <div class="team-container">
             <div class="member fade-element">
                 <img src="./assets/img/giorgio.jpg" alt="Giorgio Bressi">
-                <h4>Ing. Giorgio Bressi</h4>
-                <span>Direttore Tecnico</span><br>
-                <a href="https://www.linkedin.com/in/giorgio-bressi-940741a4/" class="lnk-btn" target="_blank">LinkedIn</a>
+                <h4 style="color:var(--blue);">Ing. Giorgio Bressi</h4>
+                <span style="color:#666; font-size:0.95rem;">Direttore Tecnico</span><br><br>
+                <a href="#" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LINKEDIN ➔</a>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/stefano.jpg" alt="Stefano Micco">
-                <h4>Ing. Stefano Micco</h4>
-                <span>Resp. Operativo</span><br>
-                <a href="https://www.linkedin.com/in/stefano-micco-932b15b8/" class="lnk-btn" target="_blank">LinkedIn</a>
+                <h4 style="color:var(--blue);">Ing. Stefano Micco</h4>
+                <span style="color:#666; font-size:0.95rem;">Resp. Operativo</span><br><br>
+                <a href="#" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LINKEDIN ➔</a>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/elisabetta.jpg" alt="Elisabetta Pavesi">
-                <h4>Arch. Elisabetta Pavesi</h4>
-                <span>Architetto</span>
+                <h4 style="color:var(--blue);">Arch. Elisabetta Pavesi</h4>
+                <span style="color:#666; font-size:0.95rem;">Architetto</span>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/matteo.jpg" alt="Matteo Bovio">
-                <h4>Ing. Matteo Bovio</h4>
-                <span>Ing. Ambientale</span><br>
-                <a href="https://www.linkedin.com/in/matteo-bovio-9937ba2a0/" class="lnk-btn" target="_blank">LinkedIn</a>
+                <h4 style="color:var(--blue);">Ing. Matteo Bovio</h4>
+                <span style="color:#666; font-size:0.95rem;">Ing. Ambientale</span>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/francesco.jpg" alt="Francesco Bressi">
-                <h4>Ing. Francesco Bressi</h4>
-                <span>Ing. Ambientale</span><br>
-                <a href="https://www.linkedin.com/in/francesco-bressi-48299522b/" class="lnk-btn" target="_blank">LinkedIn</a>
+                <h4 style="color:var(--blue);">Ing. Francesco Bressi</h4>
+                <span style="color:#666; font-size:0.95rem;">Ing. Ambientale</span>
             </div>
         </div>
     </section>
@@ -434,7 +398,7 @@
     <footer id="contatti" class="footer-sec">
         <div class="footer-grid">
             <div>
-                <h3 style="color:white; font-size:2rem; margin-bottom:20px;">Contattaci</h3>
+                <h3 style="color:white; margin-bottom:20px;">Contattaci</h3>
                 <p><strong>Tecnitalia Group</strong><br>Via Pastorelli 4E, 20143 Milano</p>
                 <p>Tel: 02 76000206<br>Email: info@tecnitaliagroup.it</p>
             </div>
@@ -442,7 +406,7 @@
                 <form action="https://formspree.io/f/mreaypqq" method="POST">
                     <input type="text" name="nome" placeholder="Nome" required>
                     <input type="email" name="email" placeholder="Email" required>
-                    <textarea name="messaggio" rows="4" placeholder="Messaggio" required></textarea>                    
+                    <textarea name="messaggio" rows="3" placeholder="Messaggio" required></textarea>
                     <button type="submit" class="submit-btn">Invia Messaggio</button>
                 </form>
             </div>
@@ -452,96 +416,77 @@
         </div>
     </footer>
 
-    <!-- MODAL POPUP -->
     <div class="modal" id="projectModal">
         <div class="modal-box">
             <button class="close-modal" onclick="closeProject()">×</button>
+            
             <div class="m-header">
                 <img id="m-img" src="">
             </div>
-            <div class="m-body">
-                <h2 id="m-title" style="font-size:2.5rem; color:var(--blue); margin-bottom:20px; line-height: 1.2;"></h2>
+
+            <div class="m-scroll-content" data-lenis-prevent>
+                <h2 id="m-title" style="color:var(--blue); margin-bottom:20px; font-size:2rem; line-height:1.2;"></h2>
+                
                 <div class="m-specs">
                     <div><strong>Committente</strong> <span id="m-client"></span></div>
                     <div><strong>Periodo</strong> <span id="m-period"></span></div>
                     <div><strong>Importo</strong> <span id="m-val"></span></div>
                     <div><strong>Attività</strong> <span id="m-type"></span></div>
                 </div>
-                <div id="m-desc" style="line-height:1.8; color:#333;"></div>
+
+                <div id="m-desc" style="color:#333;"></div>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPT -->
     <script>
-        // GESTIONE SCROLL (LENIS)
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            smooth: true
-        });
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
+        // 1. SCROLL LENIS
+        const lenis = new Lenis({ smooth: true, duration: 1.2 });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        gsap.registerPlugin(ScrollTrigger);
-
-        // --- NAVBAR SCROLL & MOBILE ---
+        // 2. NAVIGAZIONE (Effect: Transparent -> White)
         const nav = document.querySelector('nav');
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
-        const navLinksItems = document.querySelectorAll('.nav-links a');
-        const logoImg = document.querySelector('.logo-img');
-
-        // Scroll Effect
+        
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
                 nav.classList.add('scrolled');
+                if(!navLinks.classList.contains('active')) hamburger.style.color = "#1d1d1f";
             } else {
                 nav.classList.remove('scrolled');
+                if(!navLinks.classList.contains('active')) hamburger.style.color = "white";
             }
         });
 
-        // Mobile Menu
+        // 3. MENU MOBILE
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            if(navLinks.classList.contains('active')){
+            if(navLinks.classList.contains('active')) {
                 hamburger.innerHTML = "×";
-                hamburger.style.color = "var(--text)"; // X scura su sfondo bianco
-                logoImg.style.filter = "none"; // Logo nero su sfondo bianco
+                hamburger.style.color = "#1d1d1f"; 
             } else {
                 hamburger.innerHTML = "☰";
-                // Ripristina colore in base allo scroll
-                if(window.scrollY <= 50) {
-                   hamburger.style.color = "white";
-                   logoImg.style.filter = "brightness(0) invert(1)";
-                } else {
-                   hamburger.style.color = "var(--text)";
-                }
+                hamburger.style.color = window.scrollY > 50 ? "#1d1d1f" : "white";
             }
         });
 
-        navLinksItems.forEach(link => {
-            link.addEventListener('click', () => {
+        document.querySelectorAll('.nav-links a').forEach(l => {
+            l.addEventListener('click', () => {
                 navLinks.classList.remove('active');
                 hamburger.innerHTML = "☰";
-                if(window.scrollY <= 50) {
-                   hamburger.style.color = "white";
-                   logoImg.style.filter = "brightness(0) invert(1)";
-                }
+                hamburger.style.color = window.scrollY > 50 ? "#1d1d1f" : "white";
             });
         });
 
-        // --- ANIMAZIONI ---
-        gsap.from("#hero-content", {
-            y: 50, opacity: 0, duration: 1.5, ease: "power3.out", delay: 0.5
-        });
+        // 4. ANIMAZIONI GSAP
+        gsap.registerPlugin(ScrollTrigger);
         
-        gsap.to("#hero-bg", {
-            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
-            y: "30%", ease: "none"
+        gsap.from("#hero-content", { y:50, opacity:0, duration:1.5, delay:0.5 });
+        gsap.to(".hero-bg", {
+            y: "30%", ease: "none",
+            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
         });
 
         const fadeElements = document.querySelectorAll('.fade-element');
@@ -555,57 +500,68 @@
             );
         });
 
-        const parallaxImgs = document.querySelectorAll('.parallax-img');
-        parallaxImgs.forEach(img => {
-            gsap.to(img, {
-                scrollTrigger: { trigger: img.parentElement, start: "top bottom", end: "bottom top", scrub: 1 },
-                y: "20%", ease: "none"
+        document.querySelectorAll('.counter').forEach(c => {
+            gsap.to(c, {
+                innerHTML: c.getAttribute('data-target'),
+                scrollTrigger: { trigger: c, start: "top 90%" },
+                duration: 2, snap: { innerHTML: 1 }
             });
         });
 
-        const counters = document.querySelectorAll('.counter');
-        counters.forEach(counter => {
-            let target = +counter.getAttribute('data-target');
-            gsap.to(counter, {
-                scrollTrigger: { trigger: counter, start: "top 90%" },
-                innerHTML: target,
-                duration: 2,
-                snap: { innerHTML: 1 }
-            });
-        });
-
-        // --- DATI PROGETTI ---
+        // 5. DATI PROGETTI (TESTI COMPLETI INTEGRATI)
         const projectsData = [
             {
-                title: "Ex Cartiere Binda",
-                client: "Euromilano S.p.A.",
-                period: "2004 - 2007",
-                val: "2.700.000 €",
+                title: "Ex Cartiere Binda", 
+                client: "Euromilano S.p.A., Milano", 
+                period: "2004 - 2007", 
+                val: "ca. 2.700.000 €", 
                 type: "Bonifica & DL",
                 img: "./assets/img/binda.jpg", 
-                desc: `<p>Il sito era totalmente dismesso e presentava contaminazioni da PCB, metalli e idrocarburi. L’area ha cambiato destinazione ed è stata trasformata in un cantiere residenziale.</p><ul><li>Redazione del piano di caratterizzazione.</li><li>Realizzazione dell’indagine Ambientale.</li><li>Redazione del progetto definitivo di bonifica.</li><li>Direzione lavori interventi di bonifica, rimozione MCA e demolizione.</li></ul>`
+                desc: `
+                <p>Il sito era totalmente dismesso e presentava contaminazioni da PCB, metalli e idrocarburi. L’area ha cambiato destinazione ed è stata trasformata in un cantiere residenziale.</p>
+                <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
+                <ul>
+                    <li>Redazione del piano di caratterizzazione.</li>
+                    <li>Realizzazione dell’indagine Ambientale.</li>
+                    <li>Redazione del progetto definitivo di bonifica.</li>
+                    <li>Direzione lavori interventi di bonifica, rimozione MCA (materiale contenente amianto) e demolizione.</li>
+                </ul>`
             },
             {
-                title: "Ex Industrie Chimiche Baslini",
-                client: "Habita S.r.l.",
-                period: "2008 - 2013",
-                val: "20.000.000 €",
+                title: "Ex Industrie Chimiche Baslini", 
+                client: "Habita S.r.l., Trezzo d’Adda", 
+                period: "2008 - 2013", 
+                val: "ca. 20.000.000 €", 
                 type: "Progetto Operativo & DL",
-                img: "./assets/img/chimiche.jpg",
-                desc: `<p>Il sito è totalmente dismesso e presenta contaminazioni da metalli, idrocarburi, solventi e pesticidi.</p><ul><li>Redazione del progetto operativo di bonifica.</li><li>Direzione lavori.</li><li>Redazione Variante progetto con Analisi del rischio.</li><li>Modello matematico per sbarramento idraulico.</li></ul>`
+                img: "./assets/img/chimiche.jpg", 
+                desc: `
+                <p>Il sito è totalmente dismesso e presenta contaminazioni da metalli, idrocarburi, solventi e pesticidi.</p>
+                <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
+                <ul>
+                    <li>Redazione del progetto operativo di bonifica.</li>
+                    <li>Direzione lavori.</li>
+                    <li>Redazione della Variante del progetto Operativo di Bonifica con Analisi del rischio.</li>
+                    <li>Implementazione di un modello matematico per la rimodulazione dello sbarramento idraulico.</li>
+                </ul>`
             },
             {
-                title: "Cascina Merlata",
-                client: "Cascina Merlata S.p.A.",
-                period: "2012 - 2013",
-                val: "2.000.000 €",
+                title: "Cascina Merlata", 
+                client: "Cascina Merlata S.p.A, Milano", 
+                period: "2012 - 2013", 
+                val: "ca. 2.000.000 €", 
                 type: "Progetto Operativo",
-                img: "./assets/img/merlata.jpg",
-                desc: `<p>L’area verrà trasformata in un sistema di variabilità e urbanizzazioni necessarie per il collegamento tra il quartiere Cascina Merlata e la zona EXPO2015.</p><ul><li>Redazione del progetto operativo di bonifica.</li><li>Direzione lavori.</li></ul>`
+                img: "./assets/img/merlata.jpg", 
+                desc: `
+                <p>Il sito era totalmente dismesso e presentava contaminazioni da idrocarburi e metalli. L’area verrà trasformata in un sistema di variabilità e urbanizzazioni necessarie per il collegamento tra il quartiere Cascina Merlata e la zona EXPO2015.</p>
+                <p><strong>Tecnitalia Ingegneria ha ricevuto l’incarico di:</strong></p>
+                <ul>
+                    <li>Redazione del progetto operativo di bonifica.</li>
+                    <li>Direzione lavori.</li>
+                </ul>`
             }
         ];
 
-        // --- MODAL LOGIC ---
+        // 6. GESTIONE MODAL E FIX PER LO SCROLL
         const modal = document.getElementById('projectModal');
         
         function openProject(index) {
@@ -619,17 +575,22 @@
             document.getElementById('m-desc').innerHTML = p.desc;
             
             modal.classList.add('active');
-            lenis.stop();
+            
+            // FIX: Mettiamo in pausa Lenis in background per permettere lo scroll nativo del popup
+            lenis.stop(); 
         }
 
         function closeProject() {
             modal.classList.remove('active');
-            lenis.start();
+            
+            // FIX: Facciamo ripartire Lenis in background
+            lenis.start(); 
         }
 
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeProject();
+            if(e.target === modal) closeProject();
         });
+
     </script>
 </body>
 </html>
