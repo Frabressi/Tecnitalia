@@ -259,22 +259,43 @@
             .m-header { height: 250px; } 
             .m-scroll-content { padding: 25px; }
             
+            /* --- SLIDER SU MOBILE --- */
             .projects-grid { 
-                padding: 0 0 20px 0; /* Rimuove il padding laterale per sfruttare tutto lo schermo */
+                padding: 0 10px 20px 10px; 
                 gap: 15px; 
             }
+            
+            /* Forziamo la larghezza stretta e rimpiccioliamo i testi interni */
             .project-card { 
-                min-width: 120px; /* Card molto più stretta */
+                min-width: 160px; /* Larghezza molto stretta! */
+                width: 160px;     /* Forza la larghezza */
                 scroll-snap-align: start; 
             }
             .p-img-box { 
-                height: 100px; /* Rimpicciolisce un po' l'altezza della foto per proporzionarla */
+                height: 130px; /* Altezza proporzionata alla nuova larghezza */
             }
             .p-content { 
-                padding: 15px; /* Riduce lo spazio bianco interno per far respirare il testo */
+                padding: 12px; /* Riduce lo spazio bianco ai bordi */
             }
-            .slider-btn { display: none; } /* Su mobile si scorre col dito */
+            .p-content h4 {
+                font-size: 0.95rem; /* Titolo più piccolo per farlo entrare */
+                line-height: 1.2;
             }
+            .p-content p {
+                font-size: 0.75rem; /* Sottotitolo più piccolo */
+                line-height: 1.4;
+            }
+
+            /* --- FRECCE SU MOBILE --- */
+            .slider-btn { 
+                display: flex; /* Le facciamo riapparire! */
+                width: 40px; 
+                height: 40px; 
+                font-size: 1.2rem;
+            }
+            /* Spostiamo le frecce all'interno, sennò escono dallo schermo del telefono */
+            .slider-btn.prev { left: 5px; } 
+            .slider-btn.next { right: 5px; }
     </style>
 </head>
 <body>
