@@ -1,0 +1,26 @@
+[
+    {
+        "id": "news-001",
+        "data": "14 Maggio 2026",
+        "titolo": "Nuove direttive Terre e Rocce da Scavo",
+        "immagine": "./assets/img/news/terre-scavo.jpg",
+        "riassunto": "Aggiornamento sulle recenti modifiche normative per la gestione dei materiali da scavo nei cantieri urbani.",
+        "contenuto": "<p>Il recente aggiornamento normativo introduce criteri più restrittivi per la classificazione dei materiali di riporto. <strong>Tecnitalia Group</strong> ha già aggiornato le procedure operative di cantiere.</p><ul><li>Nuovi limiti per idrocarburi pesanti.</li><li>Tempi ridotti per la caratterizzazione in situ.</li></ul><p>Il nostro laboratorio è a disposizione per consulenze specifiche.</p>"
+    },
+    {
+        "id": "news-002",
+        "data": "02 Aprile 2026",
+        "titolo": "Rinnovo Certificazioni ISO e Accreditamenti",
+        "immagine": "./assets/img/news/certificazioni.jpg",
+        "riassunto": "Il laboratorio ha superato con successo l'audit per il rinnovo delle certificazioni ambientali e di qualità.",
+        "contenuto": "<p>Con grande soddisfazione comunichiamo il mantenimento degli standard ISO 9001 e ISO 14001. Questo risultato conferma la solidità delle nostre metodologie ingegneristiche e analitiche.</p>"
+    },
+    {
+        "id": "news-003",
+        "data": "15 Marzo 2026",
+        "titolo": "Convegno: Bonifiche Sostenibili e Biocapping",
+        "immagine": "./assets/img/news/convegno.jpg",
+        "riassunto": "L'Ing. Bressi interverrà come relatore al Politecnico di Milano sul tema del biorisanamento in situ.",
+        "contenuto": "<p>Il seminario affronterà i casi studio pratici di Tecnitalia, con particolare riferimento all'area Oasi Bovisa. Verranno discussi i vantaggi del biocapping rispetto alle tecniche tradizionali di messa in sicurezza permanente.</p>"
+    }
+]

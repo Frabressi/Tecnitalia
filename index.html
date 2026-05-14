@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tecnitalia Group | Ingegneria e Servizi Ambientali</title>
-    
-    <!-- Script Esterni (GSAP, Lenis) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
-
-    <!-- Font e CSS Esterno -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -18,7 +14,6 @@
 </head>
 <body>
 
-    <!-- QUI VERRÀ INIETTATA LA NAVBAR TRAMITE JS -->
     <div id="nav-placeholder"></div>
 
     <header class="hero">
@@ -26,7 +21,7 @@
         <div class="hero-overlay"></div>
         <div class="hero-text" id="hero-content">
             <h1>Tecnitalia Group</h1>
-            <p>Dal 1986. Ingegneria e Ambiente.</p>
+            <p>Dal 1986, Ingegneria e Ambiente.</p>
         </div>
     </header>
 
@@ -42,30 +37,65 @@
                     <p>Di recente sono state consolidate anche le competenze per far fronte alla domanda di certificazione delle imprese (ISO 9000, ISO 14000, EMAS) e dei prodotti (marcatura CE degli aggregati) con specifico riferimento al settore del riciclaggio dei rifiuti.</p>
                 </div>
             </div>
-        </div>
-
-        <div class="stats-grid fade-element">
-            <div><span class="stat-num counter" data-target="30">0</span><span class="stat-label">Anni d'esperienza</span></div>
-            <div><span class="stat-num counter" data-target="86">0</span><span class="stat-label">Progetti</span></div>
-            <div><span class="stat-num counter" data-target="278">0</span><span class="stat-label">Clienti</span></div>
-            <div><span class="stat-num counter" data-target="788">0</span><span class="stat-label">Tonnellate Gestite</span></div>
+            
+            <div style="text-align: center; margin-top: 40px; width: 100%;">
+                <a href="chi-siamo.html" class="filter-btn" style="display: inline-block; text-decoration: none;">La nostra storia completa ➔</a>
+            </div>
         </div>
     </section>
 
-    <section id="ingegneria" class="section bg-gray">
+    <section id="news" class="section bg-gray">
+        <div class="fade-element" style="text-align:center; margin-bottom: 40px;">
+            <h2 style="font-size:3rem; color:var(--blue);">Ultime News</h2>
+            <p>Aggiornamenti normativi, nuovi accreditamenti e attività del Gruppo.</p>
+        </div>
+
+        <div class="news-grid fade-element">
+            <div class="project-card" style="min-width: unset; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <div class="p-content">
+                    <span style="font-size: 0.8rem; color: #888; font-weight: 600;">14 Maggio 2026</span>
+                    <h4 style="color:var(--blue); margin: 10px 0 15px 0; font-size: 1.3rem;">Nuove direttive Terre e Rocce da Scavo</h4>
+                    <p style="font-size:0.95rem">Aggiornamento sulle recenti modifiche normative per la gestione dei materiali da scavo nei cantieri urbani...</p>
+                    <a href="news-singola.html" style="color: var(--blue); font-weight: bold; text-decoration: none; font-size: 0.9rem; margin-top: 15px; display: block;">Leggi l'articolo ➔</a>
+                </div>
+            </div>
+            <div class="project-card" style="min-width: unset; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <div class="p-content">
+                    <span style="font-size: 0.8rem; color: #888; font-weight: 600;">02 Aprile 2026</span>
+                    <h4 style="color:var(--blue); margin: 10px 0 15px 0; font-size: 1.3rem;">Rinnovo Certificazioni ISO</h4>
+                    <p style="font-size:0.95rem">Il laboratorio ha superato con successo l'audit per il rinnovo delle certificazioni ambientali e di qualità...</p>
+                    <a href="news-singola.html" style="color: var(--blue); font-weight: bold; text-decoration: none; font-size: 0.9rem; margin-top: 15px; display: block;">Leggi l'articolo ➔</a>
+                </div>
+            </div>
+            <div class="project-card" style="min-width: unset; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <div class="p-content">
+                    <span style="font-size: 0.8rem; color: #888; font-weight: 600;">15 Marzo 2026</span>
+                    <h4 style="color:var(--blue); margin: 10px 0 15px 0; font-size: 1.3rem;">Convegno: Bonifiche Sostenibili</h4>
+                    <p style="font-size:0.95rem">L'Ing. Bressi interverrà come relatore al Politecnico di Milano sul tema del biorisanamento in situ...</p>
+                    <a href="news-singola.html" style="color: var(--blue); font-weight: bold; text-decoration: none; font-size: 0.9rem; margin-top: 15px; display: block;">Leggi l'articolo ➔</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="fade-element" style="text-align: center; margin-top: 50px;">
+            <a href="archivio-news.html" class="filter-btn" style="display: inline-block; text-decoration: none;">Vai all'Archivio completo News ➔</a>
+        </div>
+    </section>
+
+    <section id="ingegneria" class="section">
         <div class="division-block">
             <div class="div-text fade-element">
                 <h3>Tecnitalia Ingegneria</h3>
                 <p>Grazie all'ormai trentennale esperienza, supportata da studio e ricerca costanti, offriamo un servizio completo. Dalla fine degli anni '90 ci siamo specializzati nel recupero delle aree dismesse e nelle bonifiche.</p>
-                
                 <p><strong>Tematiche Ambientali (Cosa facciamo):</strong></p>
                 <ul>
-                    <li>Trattamenti di acque di approvvigionamento, rifiuto e reflui particolari (percolato, acque di vegetazione, etc.).</li>
+                    <li>Trattamenti di acque di approvvigionamento, rifiuto e reflui particolari.</li>
                     <li>Trattamenti delle emissioni gassose.</li>
-                    <li>Gestione di rifiuti speciali (pericolosi e non), urbani (raccolta, separazione, recupero, smaltimento) e flussi particolari (demolizioni, pneumatici, oli esausti).</li>
+                    <li>Gestione di rifiuti speciali, urbani e flussi particolari.</li>
                     <li>Recupero delle aree dismesse e bonifica di siti contaminati.</li>
-                    <li>Supporto nella compravendita di siti industriali per la valutazione delle passività ambientali.</li>
+                    <li>Supporto nella compravendita di siti industriali.</li>
                 </ul>
+                <a href="dettaglio-ingegneria.html" class="filter-btn" style="display: inline-block; margin-top:20px; text-decoration: none;">Dettaglio Metodologie ➔</a>
             </div>
             <div class="div-img-wrapper reveal-img">
                 <img src="./assets/img/ingegneria.png" class="div-img" alt="Ingegneria">
@@ -73,18 +103,18 @@
         </div>
     </section>
 
-    <section id="servizi" class="section">
+    <section id="servizi" class="section bg-gray">
         <div class="division-block reversed">
             <div class="div-text fade-element">
                 <h3>Tecnitalia Servizi</h3>
                 <p>Nata agli inizi degli anni 2000, Tecnitalia Servizi opera prevalentemente nel settore ambientale per far fronte alle esigenze operative e di indagine non progettuale dei nostri clienti.</p>
-                
                 <ul>
-                    <li><strong>Indagini e Caratterizzazioni:</strong> Gestiamo tutte le fasi operative di analisi dei suoli e delle acque di falda, identificando le soluzioni ottimali ai problemi ambientali.</li>
-                    <li><strong>Laboratorio Accreditato:</strong> Grazie a una convenzione dedicata, determiniamo la concentrazione di contaminanti in tutte le matrici ambientali, sostenendo eventuali contraddittori con i laboratori pubblici.</li>
-                    <li><strong>Supporto Immobiliare:</strong> Affianchiamo le società immobiliari nelle attività di compravendita, stimando correttamente le passività ambientali presenti sui siti (tempi e costi di bonifica).</li>
-                    <li><strong>Gestione Materiali Pericolosi:</strong> Effettuiamo mappature per la presenza di materiali contenenti amianto (MCA), redigendo caratterizzazioni ambientali e piani di smaltimento rifiuti.</li>
+                    <li><strong>Indagini e Caratterizzazioni:</strong> Gestiamo tutte le fasi operative di analisi.</li>
+                    <li><strong>Laboratorio Accreditato:</strong> Determiniamo la concentrazione di contaminanti in tutte le matrici.</li>
+                    <li><strong>Supporto Immobiliare:</strong> Affianchiamo le società stimando le passività ambientali.</li>
+                    <li><strong>Gestione Materiali Pericolosi:</strong> Mappature MCA e piani smaltimento.</li>
                 </ul>
+                <a href="dettaglio-servizi.html" class="filter-btn" style="display: inline-block; margin-top:20px; text-decoration: none;">Dettaglio Laboratorio ➔</a>
             </div>
             <div class="div-img-wrapper reveal-img">
                 <img src="./assets/img/servizi.png" class="div-img" alt="Servizi">
@@ -92,95 +122,76 @@
         </div>
     </section>
 
-    <section id="progetti" class="section bg-gray">
+    <section id="progetti" class="section">
         <div class="fade-element" style="text-align:center;">
-            <h2 style="font-size:3rem; margin-bottom:10px; color:var(--blue);">Progetti in Evidenza</h2>
-            <p>I nostri principali interventi di bonifica e riqualificazione.</p>
-        </div>
-
-        <div class="filter-container fade-element">
-            <button class="filter-btn active" onclick="filterProjects('tutti', this)">Tutti i Progetti</button>
-            <button class="filter-btn" onclick="filterProjects('bonifica', this)">Bonifiche</button>
-            <button class="filter-btn" onclick="filterProjects('amianto', this)">Amianto / FAV</button>
-            <button class="filter-btn" onclick="filterProjects('acque', this)">Acque / Falde</button>
-            <button class="filter-btn" onclick="filterProjects('rifiuti', this)">Rifiuti / Discariche</button>
-            <button class="filter-btn" onclick="filterProjects('demolizione', this)">Demolizioni / Decommissioning</button>
+            <h2 style="font-size:3rem; margin-bottom:10px; color:var(--blue);">Progetti</h2>
+            <p></p>
         </div>
 
         <div class="projects-slider-container fade-element">
             <button class="slider-btn prev" onclick="scrollSlider(-1)">&#10094;</button>
-            
             <div class="projects-grid" id="projects-slider"></div>
-            
             <button class="slider-btn next" onclick="scrollSlider(1)">&#10095;</button>
+        </div>
+        
+        <div class="fade-element" style="text-align: center; margin-top: 40px; width: 100%;">
+            <a href="elenco-progetti.html" class="filter-btn" style="display: inline-block; text-decoration: none;">Visualizza Archivio Progetti Completo ➔</a>
         </div>
     </section>
 
-    <section id="team" class="section">
+    <section id="team" class="section bg-gray">
         <h2 class="fade-element" style="text-align:center; margin-bottom:50px; color:var(--blue);">Il Team</h2>
         <div class="team-container">
             <div class="member fade-element">
                 <img src="./assets/img/giorgio.jpg" alt="Giorgio Bressi">
-                <h4>Ing. Giorgio Bressi</h4>
-                <span style="color:#666; font-size:0.95rem;">Direttore Tecnico</span><br><br>
+                <h4>Ing. Giorgio Bressi</h4><span style="color:#666; font-size:0.95rem;">Direttore Tecnico</span><br><br>
                 <a href="https://www.linkedin.com/in/giorgio-bressi-940741a4/" target="_blank" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LinkedIn ➔</a>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/stefano.jpg" alt="Stefano Micco">
-                <h4>Ing. Stefano Micco</h4>
-                <span style="color:#666; font-size:0.95rem;">Resp. Operativo</span><br><br>
+                <h4>Ing. Stefano Micco</h4><span style="color:#666; font-size:0.95rem;">Resp. Operativo</span><br><br>
                 <a href="https://it.linkedin.com/in/stefano-micco-932b15b8/" target="_blank" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LinkedIn ➔</a>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/elisabetta.jpg" alt="Elisabetta Pavesi">
-                <h4>Arch. Elisabetta Pavesi</h4>
-                <span style="color:#666; font-size:0.95rem;">Architetto</span>
+                <h4>Arch. Elisabetta Pavesi</h4><span style="color:#666; font-size:0.95rem;">Architetto</span>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/matteo.jpg" alt="Matteo Bovio">
-                <h4>Ing. Matteo Bovio</h4>
-                <span style="color:#666; font-size:0.95rem;">Ing. Ambientale</span><br><br>
+                <h4>Ing. Matteo Bovio</h4><span style="color:#666; font-size:0.95rem;">Ing. Ambientale</span><br><br>
                 <a href="https://it.linkedin.com/in/matteo-bovio-9937ba2a0/" target="_blank" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LinkedIn ➔</a>
             </div>
             <div class="member fade-element">
                 <img src="./assets/img/francesco.jpg" alt="Francesco Bressi">
-                <h4>Ing. Francesco Bressi</h4>
-                <span style="color:#666; font-size:0.95rem;">Ing. Ambientale</span><br><br>
+                <h4>Ing. Francesco Bressi</h4><span style="color:#666; font-size:0.95rem;">Ing. Ambientale</span><br><br>
                 <a href="https://it.linkedin.com/in/francesco-bressi-48299522b/" target="_blank" style="color:var(--blue); font-size:0.85rem; font-weight:bold; text-decoration:none;">LinkedIn ➔</a>
             </div>
         </div>
     </section>
 
-    <!-- QUI VERRÀ INIETTATO IL FOOTER TRAMITE JS -->
     <div id="footer-placeholder"></div>
 
-    <!-- MODALE PROGETTI (Rimane nascosta di default) -->
     <div class="modal" id="projectModal">
         <div class="modal-box">
             <button class="close-modal" onclick="closeProject()">×</button>
-            
             <div class="m-header">
                 <div class="m-slides-wrapper" id="m-slides-wrapper"></div>
                 <button class="m-img-btn prev" onclick="changeModalImg(-1)" id="m-btn-prev">&#10094;</button>
                 <button class="m-img-btn next" onclick="changeModalImg(1)" id="m-btn-next">&#10095;</button>
             </div>
-
             <div class="m-scroll-content" data-lenis-prevent>
                 <h2 id="m-title" style="color:var(--blue); margin-bottom:20px; font-size:2rem; line-height:1.2;"></h2>
-                
                 <div class="m-specs">
                     <div><strong>Committente</strong> <span id="m-client"></span></div>
                     <div><strong>Periodo</strong> <span id="m-period"></span></div>
                     <div><strong>Importo</strong> <span id="m-val"></span></div>
                     <div><strong>Attività</strong> <span id="m-type"></span></div>
                 </div>
-
                 <div id="m-desc" style="color:#333;"></div>
             </div>
         </div>
     </div>
 
-    <!-- Il nostro Script Finale -->
     <script src="./js/main.js"></script>
 </body>
 </html>
