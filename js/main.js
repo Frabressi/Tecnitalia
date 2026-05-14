@@ -289,7 +289,7 @@ function inizializzaEmailJS() {
         btn.textContent = 'Invio in corso...';
         btn.disabled = true;
 
-        emailjs.sendForm('service_x33x9c9', 'template_6u6e1jo', form)
+        emailjs.sendForm('service_x33x9c9', 'template_3vrsw8r', form)
             .then(() => {
                 btn.textContent = 'Invia Messaggio';
                 btn.disabled = false;
