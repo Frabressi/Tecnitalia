@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="[https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80](https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80)" alt="Tecnitalia Group Banner" width="100%" style="border-radius: 10px;">
+  <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Tecnitalia Group Banner" width="100%">
 </p>
 
 <h1 align="center">Tecnitalia Group</h1>
