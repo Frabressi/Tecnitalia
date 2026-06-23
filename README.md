@@ -1,6 +1,9 @@
 <p align="center">
-  <img src="https://readme-design-kit.vercel.app/api/banners/gradient?title=Tecnitalia%20Group&subtitle=Ingegneria%20%26%20Ambiente%20%7C%20Jamstack%20Architecture&theme=cyberpunk" alt="Tecnitalia Group Banner" width="100%">
+  <img src="[https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80](https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80)" alt="Tecnitalia Group Banner" width="100%" style="border-radius: 10px;">
 </p>
+
+<h1 align="center">Tecnitalia Group</h1>
+<p align="center"><b>Ingegneria & Ambiente • Jamstack Architecture</b></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Stage-Production%20Ready-4CAF50?style=flat-square&logo=github" alt="Status">
@@ -89,7 +92,8 @@ Il file `js/main.js` funge da orchestratore centralizzato dell'applicazione e si
 1. **Il Ciclo di Vita `DOMContentLoaded`:** All'avvio, viene inizializzato un ciclo `Promise.all` che esegue le richieste di rete `fetch` asincrone contemporaneamente anziché in modo sequenziale, eliminando i colli di bottiglia.
 2. **Iniezione dei Componenti:** Una volta scaricati `header.html` e `footer.html`, il software individua nel DOM i selettori id `#nav-placeholder` e `#footer-placeholder` e vi inietta le stringhe HTML corrispondenti.
 3. **Inizializzazione dei Servizi condizionati:** Subito dopo l'iniezione, viene invocata la funzione `inizializzaEmailJS()` che aggancia il listener sull'evento `submit` del form (che ora esiste nel DOM, prevenendo errori di riferimento).
-4. **Rendering Dinamico & GSAP Patch:** > [!IMPORTANT]  
+4. **Rendering Dinamico & GSAP Patch:** 
+> [!IMPORTANT]  
 > **Il GSAP Patch Meccanismo:** Poiché GSAP calcola le posizioni degli elementi per le animazioni all'avvio del file, l'inserimento di dati asincroni (come le card dei progetti) altererebbe le altezze effettive della pagina sfalsando i trigger. Per risolvere questo problema, il codice implementa un meccanismo di riallineamento geometrico ritardato:
 > ```javascript
 > setTimeout(() => {
